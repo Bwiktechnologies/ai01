@@ -1,0 +1,5 @@
+{
+  "delay": 1500,
+  "watch": ["server.js", "services/", "middleware/"],
+  "ext": "js,json"
+}

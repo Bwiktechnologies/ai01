@@ -44,97 +44,90 @@ const CareerAI = () => {
     }
   };
 
-  const cardStyle = { background: '#0a0a0a', border: '1px solid #1f2937' };
-
   return (
-    <div className="max-w-[900px] mx-auto w-full px-4 lg:px-6 py-6 lg:py-8">
-      <div className="mb-8">
-        <h2 className="text-[24px] font-poppins font-bold text-white flex items-center gap-2">
-          <Compass className="w-6 h-6" style={{ color: '#3B82F6' }} />
+    <div className="max-w-[1000px] mx-auto w-full px-4 lg:px-6 py-6 lg:py-10">
+      <div className="mb-10">
+        <h2 className="text-4xl font-serif font-bold text-[var(--color-primary)] tracking-tight mb-2 flex items-center gap-3">
+          <div className="w-12 h-12 border border-[var(--color-border)] flex items-center justify-center bg-[var(--color-bg)]">
+            <Compass className="w-6 h-6 text-[var(--color-primary)]" />
+          </div>
           Career AI
         </h2>
-        <p className="text-[14px] font-inter mt-2 max-w-2xl" style={{ color: '#9ca3af' }}>
-          Discover career paths tailored to your unique strengths. Sajan's AI will map out the steps to get there.
+        <p className="text-[15px] font-sans mt-3 text-[var(--color-text-secondary)] max-w-2xl leading-relaxed">
+          Discover career paths tailored to your unique neural blueprint. Sajan's AI will calculate the optimal trajectory.
         </p>
       </div>
 
-      <div className="rounded-[20px] p-6 mb-8" style={cardStyle}>
-        <h3 className="text-[16px] font-poppins font-semibold text-white mb-4">
-          What are your interests or dream jobs?
+      <div className="p-8 mb-10 bg-white border border-[var(--color-border)]">
+        
+        <h3 className="text-[18px] font-serif font-bold text-[var(--color-primary)] mb-6">
+          Input your desired parameters or dream trajectories
         </h3>
         
-        <div className="flex flex-col sm:flex-row gap-3">
-          <div className="relative flex-1">
-            <Search className="w-5 h-5 absolute left-4 top-1/2 -translate-y-1/2" style={{ color: '#6b7280' }} />
+        <div className="flex flex-col sm:flex-row gap-4">
+          <div className="relative flex-1 group/input">
+            <Search className="w-5 h-5 absolute left-5 top-1/2 -translate-y-1/2 text-[var(--color-text-hint)] group-focus-within/input:text-[var(--color-primary)] transition-colors" />
             <input 
               type="text"
-              placeholder="e.g., I like coding and design... or I want to be a doctor"
+              placeholder="e.g., I want to be a data scientist... or I like designing interfaces"
               value={query}
               onChange={(e) => setQuery(e.target.value)}
               onKeyDown={(e) => { if (e.key === 'Enter') handleSearch(); }}
-              className="w-full h-12 rounded-xl pl-12 pr-4 text-[14px] font-inter transition-colors outline-none"
-              style={{ background: '#000000', border: '1px solid #1f2937', color: '#fff' }}
-              onFocus={e => e.currentTarget.style.borderColor = '#3B82F6'}
-              onBlur={e => e.currentTarget.style.borderColor = '#1f2937'}
+              className="w-full h-14 pl-14 pr-4 text-[15px] font-sans text-[var(--color-primary)] bg-[var(--color-bg)] border border-[var(--color-border)] transition-all outline-none focus:border-[var(--color-primary)]"
             />
           </div>
           <button 
             onClick={handleSearch}
             disabled={!query.trim() || isSearching}
-            className="h-12 px-6 rounded-xl font-inter font-bold text-white transition-all disabled:opacity-50 flex items-center justify-center gap-2"
-            style={{ background: 'linear-gradient(135deg,#3B82F6,#1D4ED8)', boxShadow: '0 4px 14px rgba(59,130,246,0.3)' }}
-            onMouseEnter={e => { if(!e.currentTarget.disabled) e.currentTarget.style.transform = 'translateY(-1px)'; }}
-            onMouseLeave={e => { e.currentTarget.style.transform = 'translateY(0)'; }}
+            className="btn-elegant h-14 px-8 disabled:opacity-50 flex items-center justify-center gap-2"
           >
-            {isSearching ? 'Analyzing...' : 'Analyze Path'}
+            {isSearching ? 'Computing...' : 'Analyze Vector'}
           </button>
         </div>
 
         {error && (
-          <div className="mt-4 p-3 rounded-lg flex items-center gap-2 text-[13px] font-inter text-red-400 bg-red-400/10 border border-red-400/20">
-            <AlertCircle className="w-4 h-4" /> {error}
+          <div className="mt-6 p-4 flex items-center gap-3 text-[14px] font-sans text-red-600 bg-red-50 border border-red-200">
+            <AlertCircle className="w-5 h-5" /> {error}
           </div>
         )}
       </div>
 
       {result && (
-        <div className="rounded-[20px] p-6 lg:p-8 animate-in fade-in slide-in-from-bottom-4 relative overflow-hidden" style={cardStyle}>
-          <div className="absolute top-0 right-0 w-64 h-64 rounded-full opacity-10 pointer-events-none"
-            style={{ background: 'radial-gradient(circle, #3B82F6 0%, transparent 70%)', transform: 'translate(30%,-30%)' }} />
+        <div className="p-8 lg:p-10 animate-in fade-in slide-in-from-bottom-4 bg-white border border-[var(--color-border)]">
           
-          <div className="flex items-start justify-between mb-6 relative z-10">
+          <div className="flex items-start justify-between mb-8">
             <div>
-              <div className="flex items-center gap-2 mb-2">
-                <Briefcase className="w-5 h-5" style={{ color: '#3B82F6' }} />
-                <h3 className="text-[20px] font-poppins font-bold text-white">
+              <div className="flex items-center gap-3 mb-3">
+                <div className="w-10 h-10 border border-[var(--color-border)] flex items-center justify-center bg-[var(--color-bg)]">
+                  <Briefcase className="w-5 h-5 text-[var(--color-primary)]" />
+                </div>
+                <h3 className="text-2xl font-serif font-bold text-[var(--color-primary)]">
                   {result.title}
                 </h3>
               </div>
-              <p className="text-[14px] font-inter max-w-2xl leading-relaxed" style={{ color: '#9ca3af' }}>
+              <p className="text-[15px] font-sans max-w-3xl leading-relaxed text-[var(--color-text-secondary)]">
                 {result.description}
               </p>
             </div>
-            <div className="rounded-xl p-3 flex flex-col items-center justify-center shrink-0 min-w-[80px]"
-              style={{ background: 'rgba(59,130,246,0.1)', border: '1px solid rgba(59,130,246,0.2)' }}>
-              <span className="text-[20px] font-poppins font-bold" style={{ color: '#3B82F6' }}>{result.match}%</span>
-              <span className="text-[10px] font-inter font-semibold uppercase tracking-wider" style={{ color: '#3B82F6' }}>Match</span>
+            <div className="p-4 flex flex-col items-center justify-center shrink-0 min-w-[100px] bg-green-50 border border-green-200">
+              <span className="text-[28px] font-serif font-bold text-green-700">{result.match}%</span>
+              <span className="text-[11px] font-sans font-bold uppercase tracking-widest text-green-600">Match</span>
             </div>
           </div>
 
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-8 mt-8 pt-8 relative z-10" style={{ borderTop: '1px solid #1f2937' }}>
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-10 mt-10 pt-10 border-t border-[var(--color-border)]">
             <div>
-              <h4 className="text-[15px] font-poppins font-semibold text-white flex items-center gap-2 mb-4">
-                <GraduationCap className="w-4 h-4" style={{ color: '#6b7280' }} />
-                Action Steps
+              <h4 className="text-[16px] font-serif font-bold text-[var(--color-primary)] flex items-center gap-2 mb-6">
+                <GraduationCap className="w-5 h-5 text-[var(--color-text-secondary)]" />
+                Strategic Action Plan
               </h4>
-              <div className="flex flex-col gap-4">
+              <div className="flex flex-col gap-5">
                 {result.steps.map((step, idx) => (
-                  <div key={idx} className="flex items-start gap-3">
-                    <div className="w-6 h-6 rounded-full flex items-center justify-center font-bold text-[12px] shrink-0 mt-0.5"
-                      style={{ background: 'rgba(59,130,246,0.15)', color: '#3B82F6' }}>
+                  <div key={idx} className="flex items-start gap-4 p-4 bg-[var(--color-bg)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-colors">
+                    <div className="w-8 h-8 flex items-center justify-center font-bold text-[14px] shrink-0 mt-0.5 border border-[var(--color-border)] bg-white text-[var(--color-primary)]">
                       {idx + 1}
                     </div>
-                    <p className="text-[14px] font-inter text-white">
+                    <p className="text-[15px] font-sans text-[var(--color-text-secondary)] leading-relaxed">
                       {step}
                     </p>
                   </div>
@@ -143,26 +136,30 @@ const CareerAI = () => {
             </div>
 
             <div>
-              <h4 className="text-[15px] font-poppins font-semibold text-white flex items-center gap-2 mb-4">
-                <TrendingUp className="w-4 h-4" style={{ color: '#6b7280' }} />
-                Key Skills Required
+              <h4 className="text-[16px] font-serif font-bold text-[var(--color-primary)] flex items-center gap-2 mb-6">
+                <TrendingUp className="w-5 h-5 text-[var(--color-text-secondary)]" />
+                Required Competencies
               </h4>
-              <div className="flex flex-wrap gap-2">
+              <div className="flex flex-wrap gap-3">
                 {result.skills.map((skill, idx) => (
-                  <span key={idx} className="rounded-full px-4 py-1.5 text-[13px] font-inter font-medium"
-                    style={{ background: '#1f2937', color: '#d1d5db', border: '1px solid #374151' }}>
+                  <span key={idx} className="px-4 py-2 text-[14px] font-sans font-medium bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)] hover:border-[var(--color-primary)] transition-colors cursor-default">
                     {skill}
                   </span>
                 ))}
               </div>
               
-              <div className="mt-8 rounded-xl p-4" style={{ background: 'rgba(242,101,34,0.06)', border: '1px solid rgba(242,101,34,0.2)' }}>
-                <p className="text-[13px] font-inter italic font-medium" style={{ color: 'rgba(255,255,255,0.85)' }}>
+              <div className="mt-10 p-8 bg-[var(--color-bg)] border border-[var(--color-border)]">
+                <p className="text-[16px] font-sans italic font-medium text-[var(--color-text-secondary)] leading-relaxed">
                   "Your career is a marathon, not a sprint. Focus on building these skills daily, and the results will follow."
                 </p>
-                <p className="text-[12px] font-poppins font-bold mt-2" style={{ color: '#f26522' }}>
-                  — Sajan Shah
-                </p>
+                <div className="flex items-center gap-3 mt-6">
+                  <div className="w-10 h-10 border border-[var(--color-border)] bg-white flex items-center justify-center">
+                    <span className="text-[var(--color-primary)] font-serif font-bold text-[14px]">SS</span>
+                  </div>
+                  <p className="text-[14px] font-serif font-bold text-[var(--color-primary)]">
+                    — Sajan Shah <span className="text-[var(--color-text-hint)] font-sans font-medium ml-1">| AI Mentor</span>
+                  </p>
+                </div>
               </div>
             </div>
           </div>

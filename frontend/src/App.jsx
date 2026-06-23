@@ -21,8 +21,9 @@ import Roadmaps from './pages/student/Roadmaps';
 import BrainGym from './pages/student/BrainGym';
 import MentalHealth from './pages/student/MentalHealth';
 import CareerAI from './pages/student/CareerAI';
-import Progress from './pages/student/Progress';
 import Profile from './pages/student/Profile';
+import LifeHacks from './pages/student/LifeHacks';
+import StudyHacks from './pages/student/StudyHacks';
 
 // Admin Pages
 import AdminDashboard from './pages/admin/AdminDashboard';
@@ -70,8 +71,9 @@ const App = () => {
               <Route path="neuroscience" element={<BrainGym />} />
               <Route path="mental-health" element={<MentalHealth />} />
               <Route path="career" element={<CareerAI />} />
-              <Route path="progress" element={<Progress />} />
               <Route path="profile" element={<Profile />} />
+              <Route path="life-hacks" element={<LifeHacks />} />
+              <Route path="study-hacks" element={<StudyHacks />} />
             </Route>
 
             {/* Admin Routes */}

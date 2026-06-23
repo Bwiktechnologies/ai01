@@ -149,76 +149,77 @@ const BrainGym = () => {
     }
   };
 
-  const cardStyle = { background: '#0a0a0a', border: '1px solid #1f2937' };
-
   if (gameState !== 'menu') {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-140px)] px-4">
-        <div className="w-full max-w-md mx-auto">
-          <button onClick={() => setGameState('menu')} className="flex items-center gap-2 text-[#9ca3af] hover:text-white mb-6 transition-colors">
-            <ArrowLeft className="w-4 h-4" /> Back to Gym
+      <div className="flex flex-col items-center justify-center min-h-[calc(100vh-140px)] px-4 py-8">
+        <div className="w-full max-w-lg mx-auto">
+          <button onClick={() => setGameState('menu')} className="flex items-center gap-2 text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] mb-8 transition-colors font-sans font-medium px-4 py-2 hover:bg-[var(--color-bg)] border border-transparent hover:border-[var(--color-border)]">
+            <ArrowLeft className="w-5 h-5" /> Abort Sequence
           </button>
           
-          <div className="rounded-[20px] p-6 lg:p-8 relative overflow-hidden text-center" style={cardStyle}>
-            <div className="flex justify-between items-center mb-6">
-              <span className="text-[14px] font-poppins font-bold" style={{ color: '#8B5CF6' }}>Level {level}</span>
-              <span className="text-[12px] font-inter font-medium px-3 py-1 rounded-full" style={{ background: '#1f2937', color: '#fff' }}>
-                Memory Palace
+          <div className="p-8 lg:p-10 text-center bg-white border border-[var(--color-border)]">
+            
+            <div className="flex justify-between items-center mb-8">
+              <div className="flex items-center gap-3">
+                <div className="w-2 h-2 rounded-full bg-[var(--color-primary)] animate-pulse" />
+                <span className="text-[15px] font-sans font-bold text-[var(--color-primary)] tracking-wide uppercase">Level {level}</span>
+              </div>
+              <span className="text-[12px] font-sans font-bold tracking-widest px-4 py-1.5 bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-text-secondary)]">
+                MEMORY PALACE
               </span>
             </div>
 
             {gameState === 'countdown' && (
-              <div className="h-[280px] flex flex-col items-center justify-center">
-                <h3 className="text-[20px] font-inter text-[#9ca3af] mb-4">Get Ready</h3>
-                <span className="text-[64px] font-poppins font-bold text-white animate-pulse">{countdown}</span>
+              <div className="h-[320px] flex flex-col items-center justify-center animate-in zoom-in duration-300">
+                <h3 className="text-[20px] font-sans font-bold text-[var(--color-text-secondary)] mb-6 uppercase tracking-widest">Initializing</h3>
+                <span className="text-[80px] font-serif font-bold text-[var(--color-primary)]">{countdown}</span>
               </div>
             )}
 
             {(gameState === 'memorize' || gameState === 'recall' || gameState === 'success') && (
-              <>
-                <h3 className="text-[16px] font-inter font-medium mb-6 min-h-[24px]" style={{ color: gameState === 'memorize' ? '#8B5CF6' : (gameState === 'success' ? '#10B981' : '#fff') }}>
-                  {gameState === 'memorize' ? 'Memorize the pattern...' : (gameState === 'success' ? 'Perfect! Level Up!' : 'Your turn! Repeat the pattern.')}
+              <div className="flex flex-col items-center">
+                <h3 className={`text-[18px] font-serif font-bold mb-8 min-h-[28px] tracking-wide transition-colors duration-300 ${gameState === 'memorize' ? 'text-[var(--color-primary)]' : (gameState === 'success' ? 'text-green-600' : 'text-[var(--color-primary)]')}`}>
+                  {gameState === 'memorize' ? 'Scanning Pattern...' : (gameState === 'success' ? 'Sequence Verified!' : 'Input Required.')}
                 </h3>
                 
-                <div className="grid grid-cols-3 gap-3 w-[240px] h-[240px] mx-auto">
+                <div className="grid grid-cols-3 gap-4 w-[280px] h-[280px] mx-auto p-4 bg-[var(--color-bg)] border border-[var(--color-border)]">
                   {Array.from({ length: gridSize }).map((_, idx) => (
                     <div 
                       key={idx}
                       onClick={() => handleSquareClick(idx)}
-                      className={`rounded-xl transition-all duration-200 ${gameState === 'recall' ? 'cursor-pointer hover:bg-white/10' : ''}`}
+                      className={`transition-all duration-300 border border-[var(--color-border)] ${gameState === 'recall' ? 'cursor-pointer hover:scale-105 active:scale-95' : ''}`}
                       style={{ 
                         background: activeSquare === idx 
-                          ? (gameState === 'memorize' ? '#8B5CF6' : '#fff') 
-                          : '#1f2937',
-                        border: '2px solid rgba(255,255,255,0.05)',
-                        boxShadow: activeSquare === idx ? '0 0 20px rgba(139,92,246,0.6)' : 'none'
+                          ? (gameState === 'memorize' ? 'var(--color-primary)' : '#fff') 
+                          : '#fff',
+                        boxShadow: activeSquare === idx ? '0 4px 12px rgba(0,0,0,0.1)' : 'none',
+                        transform: activeSquare === idx ? 'scale(1.05)' : 'scale(1)'
                       }}
                     />
                   ))}
                 </div>
-              </>
+              </div>
             )}
 
             {gameState === 'gameover' && (
-              <div className="h-[280px] flex flex-col items-center justify-center">
-                <div className="w-16 h-16 rounded-full bg-red-500/10 flex items-center justify-center mb-4">
-                  <RefreshCw className="w-8 h-8 text-red-500" />
+              <div className="h-[320px] flex flex-col items-center justify-center animate-in fade-in zoom-in duration-300">
+                <div className="w-20 h-20 bg-red-50 border border-red-200 flex items-center justify-center mb-6">
+                  <RefreshCw className="w-10 h-10 text-red-600" />
                 </div>
-                <h3 className="text-[24px] font-poppins font-bold text-white mb-2">Game Over</h3>
-                <p className="text-[14px] font-inter text-[#9ca3af] mb-6">You reached Level {level}</p>
+                <h3 className="text-[28px] font-serif font-bold text-[var(--color-primary)] mb-2">System Failure</h3>
+                <p className="text-[15px] font-sans text-[var(--color-text-secondary)] mb-8">Maximum level reached: {level}</p>
                 
-                <div className="bg-[#1f2937] px-6 py-3 rounded-xl mb-8 flex items-center gap-3">
-                  <Zap className="w-5 h-5 text-yellow-400" />
-                  <span className="text-[16px] font-bold text-white">+{scoreToSave} XP</span>
+                <div className="bg-[var(--color-bg)] border border-[var(--color-border)] px-8 py-4 mb-8 flex items-center gap-4">
+                  <Zap className="w-6 h-6 text-yellow-500 fill-yellow-500/20" />
+                  <span className="text-[20px] font-sans font-bold text-[var(--color-primary)]">+{scoreToSave} XP</span>
                 </div>
 
-                <div className="flex gap-4 w-full">
-                  <button onClick={() => setGameState('menu')} className="flex-1 py-3 rounded-xl font-inter font-semibold bg-[#1f2937] text-white hover:bg-gray-700 transition-colors">
-                    Menu
+                <div className="flex gap-4 w-full max-w-[320px]">
+                  <button onClick={() => setGameState('menu')} className="flex-1 py-3.5 font-sans font-bold bg-white text-[var(--color-primary)] border border-[var(--color-border)] hover:bg-[var(--color-bg)] transition-colors">
+                    Exit
                   </button>
-                  <button onClick={startGame} className="flex-1 py-3 rounded-xl font-inter font-semibold text-white transition-colors"
-                    style={{ background: 'linear-gradient(135deg,#8B5CF6,#6D28D9)' }}>
-                    Try Again
+                  <button onClick={startGame} className="btn-elegant flex-1 py-3.5 flex items-center justify-center">
+                    Reboot
                   </button>
                 </div>
               </div>
@@ -231,86 +232,83 @@ const BrainGym = () => {
 
   // Initial Menu State
   return (
-    <div className="max-w-[900px] mx-auto w-full px-4 lg:px-6 py-6 lg:py-8">
-      <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between mb-8">
+    <div className="max-w-[1000px] mx-auto w-full px-4 lg:px-6 py-6 lg:py-10">
+      <div className="flex flex-col md:flex-row gap-6 md:items-center justify-between mb-10">
         <div>
-          <h2 className="text-[24px] font-poppins font-bold text-white flex items-center gap-2">
-            <Brain className="w-6 h-6" style={{ color: '#8B5CF6' }} />
+          <h2 className="text-4xl font-serif font-bold text-[var(--color-primary)] flex items-center gap-3 tracking-tight mb-2">
+            <div className="w-12 h-12 border border-[var(--color-border)] flex items-center justify-center bg-[var(--color-bg)]">
+              <Brain className="w-6 h-6 text-[var(--color-primary)]" />
+            </div>
             Brain Gym
           </h2>
-          <p className="text-[14px] font-inter mt-2 max-w-xl" style={{ color: '#9ca3af' }}>
-            Train your cognitive muscles and level up your brain. Play mini-games based on real neuroscience techniques.
+          <p className="text-[15px] font-sans text-[var(--color-text-secondary)] max-w-2xl">
+            Train your cognitive neural pathways. Execute mini-games engineered from modern neuroscience techniques.
           </p>
         </div>
         
-        <div className="rounded-xl p-4 flex items-center gap-4 shrink-0"
-          style={{ background: 'rgba(139,92,246,0.1)', border: '1px solid rgba(139,92,246,0.2)' }}>
+        <div className="p-5 flex items-center gap-5 shrink-0 bg-white border border-[var(--color-border)]">
           <div>
-            <p className="text-[11px] font-inter font-bold uppercase tracking-widest" style={{ color: '#8B5CF6' }}>
-              Total XP
+            <p className="text-[11px] font-sans font-bold uppercase tracking-widest text-[var(--color-text-secondary)]">
+              Total Intelligence
             </p>
-            <p className="text-[24px] font-poppins font-bold text-white mt-1">
-              {userProfile?.xp || 0}
+            <p className="text-3xl font-serif font-bold text-[var(--color-primary)] mt-1">
+              {userProfile?.xp || 0} <span className="text-lg text-[var(--color-text-secondary)] font-sans font-medium">XP</span>
             </p>
           </div>
-          <div className="w-12 h-12 rounded-full border-4 flex items-center justify-center bg-[#050505]"
-            style={{ borderColor: 'rgba(139,92,246,0.2)', borderTopColor: '#8B5CF6' }}>
-            <span className="text-[12px] font-bold" style={{ color: '#8B5CF6' }}>Lvl {userProfile?.level || 1}</span>
+          <div className="w-14 h-14 border border-[var(--color-border)] flex items-center justify-center bg-[var(--color-bg)]">
+            <span className="text-[14px] font-bold font-sans text-[var(--color-primary)]">Lvl {userProfile?.level || 1}</span>
           </div>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
+      <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Dynamic Game Card */}
-        <div className="rounded-[16px] p-5 flex flex-col h-full transition-all duration-200 relative overflow-hidden group cursor-pointer"
-          style={{ ...cardStyle, border: '1px solid rgba(139,92,246,0.4)', boxShadow: '0 8px 32px rgba(139,92,246,0.15)' }}
+        <div className="p-6 flex flex-col h-full transition-all duration-300 cursor-pointer bg-white border border-[var(--color-border)] hover:border-[var(--color-primary)]"
           onClick={startGame}>
           
-          <div className="absolute inset-0 opacity-20 bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] pointer-events-none group-hover:opacity-30 transition-opacity" />
-          
-          <div className="relative z-10 flex flex-col h-full">
-            <div className="w-12 h-12 rounded-xl flex items-center justify-center mb-4 shadow-lg bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9]">
-              <Puzzle className="w-6 h-6 text-white" />
+          <div className="flex flex-col h-full">
+            <div className="w-12 h-12 flex items-center justify-center mb-5 border border-[var(--color-border)] bg-[var(--color-bg)]">
+              <Puzzle className="w-6 h-6 text-[var(--color-primary)]" />
             </div>
             
-            <h3 className="text-[18px] font-poppins font-bold text-white">Memory Palace</h3>
-            <p className="text-[13px] font-inter mt-2 flex-1 text-gray-300">
-              Memorize the flashing sequence. The pattern gets longer with every level you conquer.
+            <h3 className="text-xl font-serif font-bold text-[var(--color-primary)]">Memory Palace</h3>
+            <p className="text-[14px] font-sans mt-3 flex-1 text-[var(--color-text-secondary)] leading-relaxed">
+              Memorize the flashing sequence. The pattern complexity increases exponentially.
             </p>
             
-            <div className="flex items-center gap-3 mt-4 pt-4 border-t border-white/10">
-              <span className="text-[11px] font-inter font-bold tracking-wider uppercase px-2 py-1 rounded bg-[#8B5CF6]/20 text-[#A78BFA]">
-                +XP Earned
+            <div className="flex items-center gap-3 mt-6 pt-5 border-t border-[var(--color-border)]">
+              <span className="text-[11px] font-sans font-bold tracking-widest uppercase px-3 py-1.5 bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)]">
+                +XP Protocol
               </span>
             </div>
             
-            <button className="w-full mt-4 h-11 text-[14px] font-inter font-bold rounded-xl text-white flex items-center justify-center gap-2 bg-gradient-to-br from-[#8B5CF6] to-[#6D28D9] transition-transform group-hover:scale-[1.02]">
-              <Play className="w-4 h-4" /> Play Now
+            <button className="btn-elegant w-full mt-5 h-12 flex items-center justify-center gap-2">
+              <Play className="w-4 h-4" /> Execute Sequence
             </button>
           </div>
         </div>
 
         {/* Future Games */}
         {[
-          { title: 'Speed Reading Drills', icon: Zap, gradient: 'from-[#f26522] to-[#d4541a]', requiredLevel: 3, requiredXp: 200 },
-          { title: 'Focus Sprinter', icon: Clock, gradient: 'from-[#3B82F6] to-[#1D4ED8]', requiredLevel: 5, requiredXp: 400 }
+          { title: 'Cognitive Overdrive', icon: Zap, requiredLevel: 3, requiredXp: 200 },
+          { title: 'Focus Sprinter', icon: Clock, requiredLevel: 5, requiredXp: 400 }
         ].map((game, idx) => {
           const currentLevel = userProfile?.level || 1;
           const isUnlocked = currentLevel >= game.requiredLevel;
           
           return (
-            <div key={idx} className={`rounded-[16px] p-5 flex flex-col h-full relative overflow-hidden transition-all ${isUnlocked ? 'opacity-100' : 'opacity-60'}`} style={cardStyle}>
-              <div className={`w-12 h-12 rounded-xl flex items-center justify-center mb-4 bg-gradient-to-br ${game.gradient}`}>
-                <game.icon className="w-6 h-6 text-white" />
+            <div key={idx} className={`p-6 flex flex-col h-full bg-[var(--color-bg)] border border-[var(--color-border)] ${isUnlocked ? 'opacity-100 hover:border-[var(--color-primary)]' : 'opacity-60 grayscale-[50%]'}`}>
+              <div className={`w-12 h-12 flex items-center justify-center mb-5 bg-white border border-[var(--color-border)]`}>
+                <game.icon className="w-6 h-6 text-[var(--color-primary)]" />
               </div>
-              <h3 className="text-[16px] font-poppins font-semibold text-white">{game.title}</h3>
-              <p className="text-[13px] font-inter mt-2 flex-1 text-gray-400">
+              <h3 className="text-xl font-serif font-bold text-[var(--color-primary)]">{game.title}</h3>
+              <p className="text-[14px] font-sans mt-3 flex-1 text-[var(--color-text-secondary)] leading-relaxed">
                 {isUnlocked 
-                  ? 'You have unlocked this game! The logic is currently in development and will be available soon.'
-                  : `Reach Account Level ${game.requiredLevel} (${game.requiredXp} Total XP) to unlock this exercise.`}
+                  ? 'Protocol authorized. Module synthesis in progress.'
+                  : `Clearance required: Level ${game.requiredLevel} (${game.requiredXp} XP total) to unlock.`}
               </p>
-              <button className={`w-full mt-4 h-10 text-[13px] font-inter font-bold rounded-xl cursor-not-allowed ${isUnlocked ? 'bg-gradient-to-br text-white opacity-80 ' + game.gradient : 'bg-[#1f2937] text-gray-400'}`}>
-                {isUnlocked ? 'Coming Soon' : `Unlocks at Account Lvl ${game.requiredLevel}`}
+              <button className={`w-full mt-6 h-12 text-[14px] font-sans font-bold flex items-center justify-center cursor-not-allowed ${isUnlocked ? 'bg-white border border-[var(--color-border)] text-[var(--color-primary)] hover:bg-[var(--color-bg)]' : 'bg-[var(--color-bg)] text-[var(--color-text-hint)] border border-[var(--color-border)]'}`}>
+                {isUnlocked ? 'Module compiling...' : `Locked: Lvl ${game.requiredLevel} required`}
               </button>
             </div>
           );

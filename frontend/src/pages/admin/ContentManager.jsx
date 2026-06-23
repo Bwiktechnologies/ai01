@@ -44,29 +44,32 @@ const BrainGymScores = () => {
   );
 
   return (
-    <div className="p-8 max-w-6xl mx-auto w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+    <div className="p-8 lg:p-12 max-w-6xl mx-auto w-full">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-6">
         <div>
-          <h2 className="text-[24px] font-poppins font-bold text-[var(--color-text-primary)] flex items-center gap-2">
-            <Gamepad2 className="w-6 h-6 text-[#FF6B35]" />
-            Brain Gym Leaderboard
+          <h2 className="text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] tracking-tight flex items-center gap-4">
+            <Gamepad2 className="w-10 h-10 text-[var(--color-accent)]" />
+            Brain Gym Leaderboard.
           </h2>
-          <p className="text-[14px] font-inter text-text-secondary mt-1">
+          <p className="text-[16px] font-sans text-[var(--color-text-secondary)] mt-2">
             Track student progress, XP, and levels from playing Brain Gym exercises.
           </p>
         </div>
       </div>
 
-      <div className="glass-card rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden">
         {/* Toolbar */}
-        <div className="p-5 border-b border-[var(--color-border)] flex flex-col sm:flex-row gap-4 justify-between items-center bg-[rgba(0,0,0,0.2)]">
-          <div className="w-full sm:w-[350px]">
-            <Input 
-              icon={Search} 
+        <div className="p-8 border-b border-[var(--color-border)] flex flex-col sm:flex-row gap-4 justify-between items-center bg-[var(--color-bg)]">
+          <div className="w-full sm:w-[400px] relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Search className="w-5 h-5 text-[var(--color-text-hint)]" />
+            </div>
+            <input 
+              type="text"
               placeholder="Search by student name or email..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-black"
+              className="w-full h-12 pl-12 pr-4 rounded-lg border border-[var(--color-border)] bg-white text-[var(--color-primary)] placeholder-[var(--color-text-hint)] focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)] transition-all outline-none font-sans text-sm"
             />
           </div>
         </div>
@@ -75,63 +78,63 @@ const BrainGymScores = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[700px]">
             <thead>
-              <tr className="bg-[var(--color-section-alt)] border-b border-[var(--color-border)]">
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide w-20 text-center">Rank</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Student Info</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide text-center">Level</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide text-right">Total XP</th>
+              <tr className="bg-white border-b border-[var(--color-border)]">
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest w-24 text-center">Rank</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Student Info</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest text-center">Level</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest text-right">Total XP</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="4" className="text-center py-8 text-gray-500 font-inter">Loading scores...</td></tr>
+                <tr><td colSpan="4" className="text-center py-12 text-[var(--color-text-secondary)] font-sans">Loading scores...</td></tr>
               ) : filteredStudents.length === 0 ? (
-                <tr><td colSpan="4" className="text-center py-8 text-gray-500 font-inter">No students found.</td></tr>
+                <tr><td colSpan="4" className="text-center py-12 text-[var(--color-text-secondary)] font-sans">No students found.</td></tr>
               ) : (
                 filteredStudents.map((student, index) => {
                   let RankIcon = null;
-                  let rankColor = "text-text-secondary";
+                  let rankColor = "text-[var(--color-text-hint)]";
                   if (index === 0) {
                     RankIcon = Trophy;
-                    rankColor = "text-yellow-400";
+                    rankColor = "text-yellow-600";
                   } else if (index === 1) {
                     RankIcon = Medal;
-                    rankColor = "text-gray-300";
+                    rankColor = "text-slate-400";
                   } else if (index === 2) {
                     RankIcon = Medal;
-                    rankColor = "text-amber-600";
+                    rankColor = "text-amber-700";
                   }
 
                   return (
-                    <tr key={student.id} className="border-b border-[var(--color-border)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
-                      <td className="px-5 py-4 text-center">
+                    <tr key={student.id} className="border-b border-[var(--color-border)] hover:bg-[var(--color-bg)] transition-colors bg-white">
+                      <td className="px-8 py-6 text-center">
                         <div className="flex justify-center items-center h-full">
                           {RankIcon ? (
-                            <RankIcon className={`w-6 h-6 ${rankColor}`} />
+                            <RankIcon className={`w-8 h-8 ${rankColor}`} />
                           ) : (
-                            <span className="text-[14px] font-poppins font-bold text-gray-500">#{index + 1}</span>
+                            <span className="text-[16px] font-sans font-bold text-[var(--color-text-hint)]">#{index + 1}</span>
                           )}
                         </div>
                       </td>
-                      <td className="px-5 py-4">
-                        <div className="flex items-center gap-3">
-                          <div className="w-10 h-10 rounded-full bg-orange-500/10 text-orange-400 flex items-center justify-center font-bold text-sm shrink-0">
+                      <td className="px-8 py-6">
+                        <div className="flex items-center gap-4">
+                          <div className="w-10 h-10 rounded-full bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-primary)] flex items-center justify-center font-serif font-bold text-lg shrink-0">
                             {student.name ? student.name.substring(0,2).toUpperCase() : 'ST'}
                           </div>
                           <div className="flex flex-col">
-                            <span className="text-[14px] font-inter font-semibold text-[var(--color-text-primary)]">{student.name}</span>
-                            <span className="text-[12px] font-inter text-text-secondary">{student.email}</span>
+                            <span className="text-[15px] font-sans font-bold text-[var(--color-primary)]">{student.name}</span>
+                            <span className="text-[14px] font-sans text-[var(--color-text-secondary)]">{student.email}</span>
                           </div>
                         </div>
                       </td>
-                      <td className="px-5 py-4 text-center">
-                        <div className="inline-flex items-center justify-center gap-1.5 px-3 py-1 rounded-full bg-blue-500/10 text-blue-400 border border-blue-500/20">
-                          <Star className="w-3.5 h-3.5" />
-                          <span className="text-[13px] font-bold font-poppins">Level {student.level || 1}</span>
+                      <td className="px-8 py-6 text-center">
+                        <div className="inline-flex items-center justify-center gap-2 px-4 py-1.5 rounded-full bg-blue-50 text-blue-700 border border-blue-200">
+                          <Star className="w-4 h-4" />
+                          <span className="text-[13px] font-bold font-sans">Level {student.level || 1}</span>
                         </div>
                       </td>
-                      <td className="px-5 py-4 text-right">
-                        <span className="text-[16px] font-poppins font-bold text-[#10B981]">
+                      <td className="px-8 py-6 text-right">
+                        <span className="text-[18px] font-sans font-bold text-emerald-600">
                           {(student.xp || 0).toLocaleString()} XP
                         </span>
                       </td>

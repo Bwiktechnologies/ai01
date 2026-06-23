@@ -8,12 +8,12 @@ const QuickChips = ({ onChipClick }) => {
   ];
 
   return (
-    <div className="px-4 py-2 flex flex-nowrap overflow-x-auto gap-2 no-scrollbar">
+    <div className="px-4 py-3 flex flex-nowrap overflow-x-auto gap-2 no-scrollbar border-b border-[var(--color-border)]">
       {chips.map((chip, idx) => (
         <button
           key={idx}
           onClick={() => onChipClick(chip)}
-          className="bg-[var(--color-card)] border border-[var(--color-border)] rounded-[20px] px-3 py-1.5 text-[13px] font-inter font-medium text-text-secondary whitespace-nowrap hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] hover:bg-[var(--color-accent)]/5 transition-all duration-200"
+          className="bg-white border border-[var(--color-border)] rounded-full px-4 py-1.5 text-[13px] font-sans font-medium text-[var(--color-primary)] whitespace-nowrap hover:border-[var(--color-accent)] hover:text-[var(--color-accent)] transition-all duration-200"
         >
           {chip}
         </button>

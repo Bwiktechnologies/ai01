@@ -6,9 +6,9 @@ export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
   const [isDark, setIsDark] = useState(() => {
-    const saved = localStorage.getItem('theme');
-    if (saved) return saved === 'dark';
-    return window.matchMedia('(prefers-color-scheme: dark)').matches;
+    // Force dark mode to showcase the new AI Agent theme
+    localStorage.setItem('theme', 'dark');
+    return true;
   });
 
   useEffect(() => {

@@ -90,22 +90,22 @@ const UploadCSV = () => {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto w-full">
-      <div className="mb-8">
-        <h2 className="text-[24px] font-poppins font-bold text-[var(--color-text-primary)]">Bulk Upload Students</h2>
-        <p className="text-[14px] font-inter text-text-secondary mt-1">
+    <div className="p-8 lg:p-12 max-w-5xl mx-auto w-full">
+      <div className="mb-10">
+        <h2 className="text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] tracking-tight">Bulk Upload Students.</h2>
+        <p className="text-[16px] font-sans text-[var(--color-text-secondary)] mt-2 leading-relaxed">
           Upload a CSV file from Sajan's workshops to create accounts in bulk. Welcome emails will be sent automatically.
         </p>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+      <div className="grid grid-cols-1 lg:grid-cols-3 gap-8">
         {/* Upload Area */}
         <div className="lg:col-span-2">
-          <div className="glass-card rounded-2xl shadow-card p-6">
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm p-8">
             
             <div 
-              className={`border-2 border-dashed rounded-xl p-10 flex flex-col items-center justify-center text-center transition-colors
-                ${file ? 'border-[#10B981] bg-green-500/10' : 'border-[var(--color-border)] hover:border-[var(--color-accent)] hover:bg-orange-500/10'}`}
+              className={`border-2 border-dashed rounded-xl p-12 flex flex-col items-center justify-center text-center transition-all duration-300 cursor-pointer
+                ${file ? 'border-emerald-500 bg-emerald-50' : 'border-[var(--color-border)] hover:border-[var(--color-primary)] hover:bg-[var(--color-bg)]'}`}
               onDragOver={handleDragOver}
               onDrop={handleDrop}
               onClick={() => !file && fileInputRef.current?.click()}
@@ -120,74 +120,74 @@ const UploadCSV = () => {
               
               {file ? (
                 <>
-                  <div className="w-16 h-16 rounded-full bg-green-500/10 flex items-center justify-center mb-4">
-                    <FileSpreadsheet className="w-8 h-8 text-[#10B981]" />
+                  <div className="w-20 h-20 rounded-full bg-emerald-100 flex items-center justify-center mb-6 border border-emerald-200 shadow-sm">
+                    <FileSpreadsheet className="w-10 h-10 text-emerald-600" />
                   </div>
-                  <h3 className="text-[16px] font-poppins font-semibold text-[var(--color-text-primary)]">{file.name}</h3>
-                  <p className="text-[13px] font-inter text-text-secondary mt-1">
+                  <h3 className="text-xl font-serif font-bold text-[var(--color-primary)]">{file.name}</h3>
+                  <p className="text-[14px] font-sans text-[var(--color-text-secondary)] mt-2">
                     {(file.size / 1024).toFixed(2)} KB
                   </p>
                   
-                  <div className="flex gap-3 mt-6">
-                    <Button variant="ghost" onClick={(e) => { e.stopPropagation(); setFile(null); }}>
-                      <Trash2 className="w-4 h-4 mr-2" /> Remove
-                    </Button>
-                    <Button onClick={(e) => { e.stopPropagation(); handleUpload(); }} isLoading={isUploading}>
-                      Upload & Process
-                    </Button>
+                  <div className="flex gap-4 mt-8">
+                    <button onClick={(e) => { e.stopPropagation(); setFile(null); }} className="px-6 py-3 rounded-lg font-sans font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-bg)] transition-colors flex items-center gap-2">
+                      <Trash2 className="w-4 h-4" /> Remove
+                    </button>
+                    <button onClick={(e) => { e.stopPropagation(); handleUpload(); }} disabled={isUploading} className="btn-elegant px-8">
+                      {isUploading ? 'Uploading...' : 'Upload & Process'}
+                    </button>
                   </div>
                 </>
               ) : (
                 <>
-                  <div className="w-16 h-16 rounded-full bg-[rgba(255,255,255,0.05)] flex items-center justify-center mb-4">
-                    <UploadIcon className="w-8 h-8 text-gray-400" />
+                  <div className="w-20 h-20 rounded-full bg-[var(--color-bg)] border border-[var(--color-border)] flex items-center justify-center mb-6 shadow-sm">
+                    <UploadIcon className="w-10 h-10 text-[var(--color-text-hint)]" />
                   </div>
-                  <h3 className="text-[16px] font-poppins font-semibold text-[var(--color-text-primary)]">Drag & Drop your CSV here</h3>
-                  <p className="text-[13px] font-inter text-text-secondary mt-1 max-w-sm mx-auto">
+                  <h3 className="text-xl font-serif font-bold text-[var(--color-primary)]">Drag & Drop your CSV here</h3>
+                  <p className="text-[14px] font-sans text-[var(--color-text-secondary)] mt-2 max-w-sm mx-auto leading-relaxed">
                     or click to browse from your computer. Make sure it follows the required format.
                   </p>
-                  <Button variant="secondary" className="mt-6 pointer-events-none">
+                  <button className="mt-8 px-8 py-3 rounded-lg border border-[var(--color-border)] font-sans font-bold text-[var(--color-primary)] hover:bg-[var(--color-bg)] transition-colors pointer-events-none">
                     Select File
-                  </Button>
+                  </button>
                 </>
               )}
             </div>
 
             {uploadResult && (
-              <div className="mt-8 border-t border-[var(--color-border)] pt-6 animate-in fade-in slide-in-from-bottom-4">
-                <div className="flex items-center justify-between mb-4">
-                  <h3 className="text-[16px] font-poppins font-bold text-[var(--color-text-primary)]">Upload Results</h3>
-                  <span className="bg-green-500/20 text-green-400 px-3 py-1 rounded-full text-[12px] font-bold">
+              <div className="mt-10 border-t border-[var(--color-border)] pt-8 animate-in fade-in slide-in-from-bottom-4">
+                <div className="flex items-center justify-between mb-6">
+                  <h3 className="text-xl font-serif font-bold text-[var(--color-primary)]">Upload Results</h3>
+                  <span className="bg-emerald-50 border border-emerald-200 text-emerald-700 px-4 py-1.5 rounded-full text-xs font-sans font-bold uppercase tracking-widest">
                     Completed
                   </span>
                 </div>
                 
-                <div className="grid grid-cols-3 gap-4 mb-6">
-                  <div className="bg-[rgba(255,255,255,0.05)] rounded-xl p-4 text-center border border-[var(--color-border)]">
-                    <div className="text-[24px] font-poppins font-bold text-[var(--color-text-primary)]">{uploadResult.totalProcessed}</div>
-                    <div className="text-[11px] font-inter font-bold text-gray-400 uppercase">Processed</div>
+                <div className="grid grid-cols-3 gap-6 mb-8">
+                  <div className="bg-[var(--color-bg)] rounded-xl p-6 text-center border border-[var(--color-border)]">
+                    <div className="text-4xl font-serif font-bold text-[var(--color-primary)] mb-2">{uploadResult.totalProcessed}</div>
+                    <div className="text-[11px] font-sans font-bold text-[var(--color-text-secondary)] uppercase tracking-widest">Processed</div>
                   </div>
-                  <div className="bg-green-500/10 rounded-xl p-4 text-center border border-green-500/20">
-                    <div className="text-[24px] font-poppins font-bold text-green-500">{uploadResult.created}</div>
-                    <div className="text-[11px] font-inter font-bold text-green-500 uppercase">Created</div>
+                  <div className="bg-emerald-50 rounded-xl p-6 text-center border border-emerald-100">
+                    <div className="text-4xl font-serif font-bold text-emerald-600 mb-2">{uploadResult.created}</div>
+                    <div className="text-[11px] font-sans font-bold text-emerald-700 uppercase tracking-widest">Created</div>
                   </div>
-                  <div className="bg-red-500/10 rounded-xl p-4 text-center border border-red-500/20">
-                    <div className="text-[24px] font-poppins font-bold text-red-500">{uploadResult.failed}</div>
-                    <div className="text-[11px] font-inter font-bold text-red-500 uppercase">Failed</div>
+                  <div className="bg-red-50 rounded-xl p-6 text-center border border-red-100">
+                    <div className="text-4xl font-serif font-bold text-red-600 mb-2">{uploadResult.failed}</div>
+                    <div className="text-[11px] font-sans font-bold text-red-700 uppercase tracking-widest">Failed</div>
                   </div>
                 </div>
 
                 {uploadResult.errors?.length > 0 && (
                   <div>
-                    <h4 className="text-[14px] font-poppins font-semibold text-red-500 mb-2 flex items-center gap-2">
-                      <AlertCircle className="w-4 h-4" /> Error Log
+                    <h4 className="text-[15px] font-sans font-bold text-red-600 mb-3 flex items-center gap-2">
+                      <AlertCircle className="w-5 h-5" /> Error Log
                     </h4>
-                    <div className="bg-black border border-red-500/20 rounded-xl overflow-hidden text-[13px] font-inter">
+                    <div className="bg-white border border-red-100 rounded-xl overflow-hidden text-[14px] font-mono shadow-sm">
                       {uploadResult.errors.map((err, i) => (
-                        <div key={i} className="flex p-3 border-b border-[var(--color-border)] last:border-0 bg-red-500/10">
-                          <span className="w-16 font-semibold text-red-400">Row {err.row || i+1}</span>
-                          <span className="w-48 text-gray-300 truncate">{err.email}</span>
-                          <span className="text-red-400">{err.error || err.reason}</span>
+                        <div key={i} className="flex p-4 border-b border-red-50 last:border-0 bg-red-50/50 items-center">
+                          <span className="w-20 font-bold text-red-500">Row {err.row || i+1}</span>
+                          <span className="w-48 text-[var(--color-primary)] truncate font-semibold">{err.email}</span>
+                          <span className="text-red-600">{err.error || err.reason}</span>
                         </div>
                       ))}
                     </div>
@@ -200,39 +200,39 @@ const UploadCSV = () => {
 
         {/* Instructions */}
         <div className="lg:col-span-1">
-          <div className="glass-card rounded-2xl p-6 shadow-card">
-            <h3 className="text-[15px] font-poppins font-bold text-[var(--color-text-primary)] mb-4">Required Format</h3>
-            <p className="text-[13px] font-inter text-text-secondary mb-4">
+          <div className="bg-white border border-[var(--color-border)] rounded-2xl p-8 shadow-sm sticky top-8">
+            <h3 className="text-lg font-serif font-bold text-[var(--color-primary)] mb-4">Required Format</h3>
+            <p className="text-[14px] font-sans text-[var(--color-text-secondary)] mb-6 leading-relaxed">
               Your CSV file must include a header row with exactly these column names:
             </p>
             
-            <div className="bg-black border border-[var(--color-border)] rounded-lg p-3 text-[12px] font-mono text-[var(--color-text-primary)] mb-6 overflow-x-auto whitespace-nowrap">
+            <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-lg p-4 text-[13px] font-mono text-[var(--color-primary)] font-semibold mb-8 overflow-x-auto whitespace-nowrap shadow-inner">
               name, email, phone, workshop
             </div>
 
-            <h4 className="text-[13px] font-poppins font-semibold text-[var(--color-text-primary)] mb-2">Column Details:</h4>
-            <ul className="text-[13px] font-inter text-text-secondary space-y-3">
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                <span><strong className="text-white">name</strong> (Required): Full name of the student.</span>
+            <h4 className="text-[14px] font-sans font-bold text-[var(--color-primary)] mb-4">Column Details:</h4>
+            <ul className="text-[14px] font-sans text-[var(--color-text-secondary)] space-y-4">
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                <span className="leading-relaxed"><strong className="text-[var(--color-primary)]">name</strong> (Required): Full name of the student.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-green-500 shrink-0 mt-0.5" />
-                <span><strong className="text-white">email</strong> (Required): Must be a valid, unique email address.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-emerald-500 shrink-0 mt-0.5" />
+                <span className="leading-relaxed"><strong className="text-[var(--color-primary)]">email</strong> (Required): Must be a valid, unique email address.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
-                <span><strong className="text-white">phone</strong> (Optional): Including country code is recommended.</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[var(--color-text-hint)] shrink-0 mt-0.5" />
+                <span className="leading-relaxed"><strong className="text-[var(--color-primary)]">phone</strong> (Optional): Including country code is recommended.</span>
               </li>
-              <li className="flex items-start gap-2">
-                <CheckCircle2 className="w-4 h-4 text-gray-500 shrink-0 mt-0.5" />
-                <span><strong className="text-white">workshop</strong> (Optional): Source of the student (e.g., 'Memory Workshop').</span>
+              <li className="flex items-start gap-3">
+                <CheckCircle2 className="w-5 h-5 text-[var(--color-text-hint)] shrink-0 mt-0.5" />
+                <span className="leading-relaxed"><strong className="text-[var(--color-primary)]">workshop</strong> (Optional): Source of the student.</span>
               </li>
             </ul>
             
-            <Button onClick={handleDownloadTemplate} variant="secondary" className="w-full mt-6 flex items-center justify-center gap-2">
+            <button onClick={handleDownloadTemplate} className="w-full mt-8 flex items-center justify-center gap-2 px-6 py-3 rounded-lg border border-[var(--color-border)] font-sans font-bold text-[var(--color-primary)] hover:bg-[var(--color-bg)] transition-colors">
               <FileSpreadsheet className="w-4 h-4" /> Download Template
-            </Button>
+            </button>
           </div>
         </div>
       </div>

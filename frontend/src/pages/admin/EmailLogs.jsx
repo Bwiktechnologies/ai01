@@ -38,30 +38,33 @@ const EmailLogs = () => {
   }, []);
 
   return (
-    <div className="p-8 max-w-7xl mx-auto w-full">
-      <div className="mb-8">
-        <h2 className="text-[24px] font-poppins font-bold text-[var(--color-text-primary)]">Email Delivery Logs</h2>
-        <p className="text-[14px] font-inter text-text-secondary mt-1">
+    <div className="p-8 lg:p-12 max-w-7xl mx-auto w-full">
+      <div className="mb-10">
+        <h2 className="text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] tracking-tight">Email Delivery Logs.</h2>
+        <p className="text-[16px] font-sans text-[var(--color-text-secondary)] mt-2">
           Monitor SendGrid email delivery statuses and troubleshoot issues.
         </p>
       </div>
 
-      <div className="glass-card rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden">
         {/* Toolbar */}
-        <div className="p-5 border-b border-[var(--color-border)] flex flex-col sm:flex-row gap-4 justify-between items-center bg-[rgba(0,0,0,0.2)]">
-          <div className="w-full sm:w-[350px]">
-            <Input 
-              icon={Search} 
+        <div className="p-8 border-b border-[var(--color-border)] flex flex-col sm:flex-row gap-4 justify-between items-center bg-[var(--color-bg)]">
+          <div className="w-full sm:w-[400px] relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Search className="w-5 h-5 text-[var(--color-text-hint)]" />
+            </div>
+            <input 
+              type="text"
               placeholder="Search by email or subject..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-black"
+              className="w-full h-12 pl-12 pr-4 rounded-lg border border-[var(--color-border)] bg-white text-[var(--color-primary)] placeholder-[var(--color-text-hint)] focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)] transition-all outline-none font-sans text-sm"
             />
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <Button variant="ghost" className="flex items-center gap-2 !py-2.5 h-[46px] w-full sm:w-auto">
+            <button className="flex items-center justify-center gap-2 h-12 px-6 rounded-lg border border-[var(--color-border)] bg-white text-[var(--color-primary)] font-sans font-semibold text-sm hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] transition-all w-full sm:w-auto">
               <Filter className="w-4 h-4" /> Filter Status
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -69,35 +72,35 @@ const EmailLogs = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
-              <tr className="bg-[var(--color-section-alt)] border-b border-[var(--color-border)]">
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Timestamp</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Recipient</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Subject</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Type</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Status</th>
+              <tr className="bg-white border-b border-[var(--color-border)]">
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Timestamp</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Recipient</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Subject</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Type</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Status</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="5" className="text-center py-8 text-gray-500 font-inter">Loading logs...</td></tr>
+                <tr><td colSpan="5" className="text-center py-12 text-[var(--color-text-secondary)] font-sans">Loading logs...</td></tr>
               ) : logs.length === 0 ? (
-                <tr><td colSpan="5" className="text-center py-8 text-gray-500 font-inter">No logs found.</td></tr>
+                <tr><td colSpan="5" className="text-center py-12 text-[var(--color-text-secondary)] font-sans">No logs found.</td></tr>
               ) : (
                 logs.map((log) => (
-                  <tr key={log.id} className="border-b border-[var(--color-border)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
-                    <td className="px-5 py-4 text-[13px] font-inter text-text-secondary whitespace-nowrap">
+                  <tr key={log.id} className="border-b border-[var(--color-border)] hover:bg-[var(--color-bg)] transition-colors bg-white">
+                    <td className="px-8 py-6 text-[14px] font-sans text-[var(--color-text-secondary)] whitespace-nowrap">
                       {log.sentAt ? new Date(log.sentAt).toLocaleString() : '-'}
                     </td>
-                    <td className="px-5 py-4 text-[14px] font-inter font-semibold text-[var(--color-text-primary)]">{log.to}</td>
-                    <td className="px-5 py-4 text-[13px] font-inter text-text-secondary truncate max-w-[200px]">{log.subject || 'Welcome to AI Sajan Shah'}</td>
-                    <td className="px-5 py-4">
-                      <span className="text-[12px] font-inter text-gray-400 bg-gray-800 px-2 py-1 rounded">
+                    <td className="px-8 py-6 text-[15px] font-sans font-bold text-[var(--color-primary)]">{log.to}</td>
+                    <td className="px-8 py-6 text-[14px] font-sans text-[var(--color-text-secondary)] truncate max-w-[200px]">{log.subject || 'Welcome to AI Sajan Shah'}</td>
+                    <td className="px-8 py-6">
+                      <span className="text-[12px] font-sans font-bold text-blue-700 bg-blue-50 border border-blue-200 px-3 py-1.5 rounded-full inline-block">
                         {log.type}
                       </span>
                     </td>
-                    <td className="px-5 py-4">
-                      <div className={`flex items-center gap-1.5 text-[13px] font-inter font-semibold ${
-                        log.status === 'success' || log.status === 'Delivered' ? 'text-green-400' : 'text-red-400'
+                    <td className="px-8 py-6">
+                      <div className={`flex items-center gap-2 text-[12px] font-sans font-bold px-3 py-1.5 rounded-full inline-flex ${
+                        log.status === 'success' || log.status === 'Delivered' ? 'text-emerald-700 bg-emerald-50 border border-emerald-200' : 'text-red-700 bg-red-50 border border-red-200'
                       }`}>
                         {(log.status === 'success' || log.status === 'Delivered') ? <CheckCircle2 className="w-4 h-4" /> : <XCircle className="w-4 h-4" />}
                         {log.status === 'success' ? 'Delivered' : log.status}

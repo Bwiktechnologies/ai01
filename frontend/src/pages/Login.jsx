@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { useNavigate, useLocation } from 'react-router-dom';
-import { Sparkles, Brain, Target, Compass, Eye, EyeOff } from 'lucide-react';
+import { Sparkles, Brain, Target, Compass, Eye, EyeOff, AlertCircle } from 'lucide-react';
 import { useAuth } from '../contexts/AuthContext';
 import Button from '../components/ui/Button';
 import Input from '../components/ui/Input';
@@ -69,117 +69,49 @@ const Login = () => {
   const displayError = localError || authError;
 
   return (
-    <div className="min-h-screen flex w-full">
-      {/* LEFT PANEL - Hidden on mobile */}
-      <div className="hidden lg:flex w-[45%] bg-[#1A1A2E] p-12 flex-col justify-center relative">
-        <div className="max-w-md mx-auto w-full">
-          {/* Brand Header */}
-          <div className="flex items-center gap-3 whitespace-nowrap">
-            <div className="w-12 h-12 rounded-[14px] bg-[var(--color-accent)] flex items-center justify-center shrink-0">
-              <Sparkles className="w-[22px] h-[22px] text-white" />
-            </div>
-            <div className="flex whitespace-nowrap">
-              <span className="text-white font-poppins font-bold text-[28px]">AI&nbsp;</span>
-              <span className="text-[var(--color-accent)] font-poppins font-bold text-[28px]">Sajan Shah</span>
-            </div>
-          </div>
-          
-          <p className="text-[18px] font-inter font-medium text-white/80 mt-3 whitespace-nowrap">
-            Your Personal Mentor, Available 24/7
-          </p>
-
-          {/* Feature Cards */}
-          <div className="flex flex-col gap-3 mt-10">
-            <div className="flex items-start gap-3 p-3 rounded-[14px] bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.10] transition-colors duration-200">
-              <div className="w-9 h-9 rounded-lg bg-[#FF6B35]/20 shrink-0 flex items-center justify-center">
-                <Brain className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h4 className="text-[14px] font-poppins font-semibold text-white">Memory Techniques</h4>
-                <p className="text-[12px] font-inter text-white/60 mt-0.5">Scientifically-proven study methods</p>
-              </div>
-            </div>
-            
-            <div className="flex items-start gap-3 p-3 rounded-[14px] bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.10] transition-colors duration-200">
-              <div className="w-9 h-9 rounded-lg bg-[#3B82F6]/20 shrink-0 flex items-center justify-center">
-                <Target className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h4 className="text-[14px] font-poppins font-semibold text-white">90-Day Goal Setting</h4>
-                <p className="text-[12px] font-inter text-white/60 mt-0.5">Structured transformation framework</p>
-              </div>
-            </div>
-
-            <div className="flex items-start gap-3 p-3 rounded-[14px] bg-white/[0.06] border border-white/[0.08] hover:bg-white/[0.10] transition-colors duration-200">
-              <div className="w-9 h-9 rounded-lg bg-[#10B981]/20 shrink-0 flex items-center justify-center">
-                <Compass className="w-4 h-4 text-white" />
-              </div>
-              <div>
-                <h4 className="text-[14px] font-poppins font-semibold text-white">Career Guidance</h4>
-                <p className="text-[12px] font-inter text-white/60 mt-0.5">AI-powered path recommendations</p>
-              </div>
-            </div>
-          </div>
-
-          {/* Stats Row */}
-          <div className="flex items-center gap-6 mt-16 pt-10">
-            <div>
-              <div className="text-white font-bold text-[14px]">15M+ Lives</div>
-              <div className="text-white/50 text-[11px] mt-0.5">Transformed</div>
-            </div>
-            <div className="h-7 w-px bg-white/15"></div>
-            <div>
-              <div className="text-white font-bold text-[14px]">3x TEDx</div>
-              <div className="text-white/50 text-[11px] mt-0.5">Speaker</div>
-            </div>
-            <div className="h-7 w-px bg-white/15"></div>
-            <div>
-              <div className="text-white font-bold text-[14px]">14+ Years</div>
-              <div className="text-white/50 text-[11px] mt-0.5">Experience</div>
-            </div>
-          </div>
-        </div>
-      </div>
-
-      {/* RIGHT PANEL */}
-      <div className="w-full lg:w-[55%] bg-white min-h-screen flex items-center justify-center p-6 lg:p-10 relative">
+    <div className="min-h-screen flex w-full relative overflow-hidden bg-white">
+      {/* LEFT PANEL - Login Form (Previously Right) */}
+      <div className="w-full lg:w-[50%] min-h-screen flex items-center justify-center p-6 lg:p-16 relative z-10 bg-white">
         
         {/* Mobile Logo */}
-        <div className="lg:hidden absolute top-6 left-0 right-0 flex justify-center">
-          <div className="flex items-center gap-2">
-            <div className="w-8 h-8 rounded-[10px] bg-[var(--color-accent)] flex items-center justify-center">
-              <Sparkles className="w-4 h-4 text-white" />
-            </div>
-            <span className="font-poppins font-bold text-[18px]">AI Sajan Shah</span>
+        <div className="lg:hidden absolute top-8 left-8 flex items-center gap-3">
+          <div className="w-10 h-10 border border-[var(--color-border)] bg-[var(--color-bg)] flex items-center justify-center">
+            <Sparkles className="w-5 h-5 text-[var(--color-primary)]" />
           </div>
+          <span className="font-serif font-bold text-xl text-[var(--color-primary)] uppercase">AI Sajan Shah</span>
         </div>
 
         <div className="w-full max-w-[400px]">
-          <div className="text-center mb-9">
-            <h2 className="text-[30px] font-poppins font-bold text-[var(--color-text-primary)]">Welcome Back</h2>
-            <p className="text-[14px] font-inter text-text-secondary mt-1.5">Sign in to access your AI mentor</p>
+          <div className="mb-10 text-center">
+            <h2 className="text-4xl font-serif font-bold text-[var(--color-primary)] mb-3">Welcome Back.</h2>
+            <p className="text-[15px] font-sans text-[var(--color-text-secondary)]">Sign in to access your intelligence matrix.</p>
           </div>
 
           {displayError && (
-            <div className="mb-6 p-3 bg-red-50 border border-red-200 rounded-lg text-sm text-red-600">
-              {displayError}
+            <div className="mb-6 p-4 bg-red-50 border border-red-200 text-sm font-sans text-red-600 flex items-start gap-3">
+              <AlertCircle className="w-5 h-5 shrink-0 mt-0.5" />
+              <span>{displayError}</span>
             </div>
           )}
 
-          <form onSubmit={handleEmailLogin} className="flex flex-col">
-            <Input
-              label="Email Address"
-              type="email"
-              placeholder="your@email.com"
-              value={email}
-              onChange={(e) => setEmail(e.target.value)}
-              required
-            />
+          <form onSubmit={handleEmailLogin} className="flex flex-col gap-6">
+            <div>
+              <label className="block text-xs font-sans font-bold uppercase tracking-widest text-[var(--color-text-secondary)] mb-2">Email Address</label>
+              <input
+                type="email"
+                className="w-full h-12 px-4 border border-[var(--color-border)] bg-[var(--color-bg)] focus:border-[var(--color-primary)] focus:bg-white transition-all outline-none font-sans text-[15px] text-[var(--color-primary)] placeholder-[var(--color-text-hint)]"
+                placeholder="name@example.com"
+                value={email}
+                onChange={(e) => setEmail(e.target.value)}
+                required
+              />
+            </div>
 
-            <div className="mt-5 relative">
-              <Input
-                label="Password"
+            <div className="relative">
+              <label className="block text-xs font-sans font-bold uppercase tracking-widest text-[var(--color-text-secondary)] mb-2">Password</label>
+              <input
                 type={showPassword ? 'text' : 'password'}
+                className="w-full h-12 px-4 border border-[var(--color-border)] bg-[var(--color-bg)] focus:border-[var(--color-primary)] focus:bg-white transition-all outline-none font-sans text-[15px] text-[var(--color-primary)] placeholder-[var(--color-text-hint)]"
                 placeholder="Enter your password"
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
@@ -187,35 +119,37 @@ const Login = () => {
               />
               <button
                 type="button"
-                className="absolute right-4 top-[38px] text-gray-400 hover:text-gray-600"
+                className="absolute right-4 top-[36px] text-[var(--color-text-hint)] hover:text-[var(--color-text-secondary)] transition-colors"
                 onClick={() => setShowPassword(!showPassword)}
               >
                 {showPassword ? <EyeOff className="w-5 h-5" /> : <Eye className="w-5 h-5" />}
               </button>
             </div>
 
-            <div className="flex items-center justify-between mt-3.5">
-              <label className="flex items-center gap-2 cursor-pointer">
-                <input type="checkbox" className="w-4 h-4 rounded border-gray-300 text-[var(--color-accent)] focus:ring-[var(--color-accent)]" />
-                <span className="text-[13px] text-text-secondary">Remember me</span>
+            <div className="flex items-center justify-between mt-2">
+              <label className="flex items-center gap-3 cursor-pointer group">
+                <div className="w-4 h-4 border border-[var(--color-border)] flex items-center justify-center group-hover:border-[var(--color-primary)] transition-colors">
+                  <div className="w-2 h-2 bg-transparent"></div>
+                </div>
+                <span className="text-[14px] font-sans text-[var(--color-text-secondary)] group-hover:text-[var(--color-primary)] transition-colors">Remember me</span>
               </label>
-              <span className="text-[13px] text-[var(--color-accent)] font-medium hover:underline cursor-pointer">
+              <button type="button" className="text-[13px] font-sans font-bold text-[var(--color-primary)] hover:text-[var(--color-text-secondary)] transition-colors underline underline-offset-4 decoration-[var(--color-border)]">
                 Forgot password?
-              </span>
+              </button>
             </div>
 
-            <Button
+            <button
               type="submit"
-              className="w-full h-[52px] mt-7"
-              isLoading={isSubmitting}
+              className="btn-elegant w-full justify-center mt-4 h-14 text-[15px]"
+              disabled={isSubmitting}
             >
-              Sign In
-            </Button>
+              {isSubmitting ? 'Authenticating...' : 'Sign In'}
+            </button>
           </form>
 
-          <div className="flex items-center gap-3 my-6">
+          <div className="flex items-center gap-4 my-8">
             <div className="flex-1 h-px bg-[var(--color-border)]"></div>
-            <span className="text-[11px] font-inter font-semibold text-text-hint tracking-widest uppercase">OR</span>
+            <span className="text-xs font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Or Access With</span>
             <div className="flex-1 h-px bg-[var(--color-border)]"></div>
           </div>
 
@@ -223,18 +157,67 @@ const Login = () => {
             type="button"
             onClick={handleGoogleLogin}
             disabled={isSubmitting}
-            className="w-full h-[52px] bg-white border-[1.5px] border-[var(--color-border)] rounded-xl flex items-center justify-center gap-3 hover:border-gray-300 hover:bg-gray-50 transition-colors duration-200 disabled:opacity-50"
+            className="w-full h-14 bg-white border border-[var(--color-border)] flex items-center justify-center gap-3 hover:bg-[var(--color-bg)] transition-all duration-200 disabled:opacity-50 text-[15px] text-[var(--color-primary)] font-sans font-medium"
           >
             <svg viewBox="0 0 24 24" width="20" height="20" xmlns="http://www.w3.org/2000/svg">
-              <g transform="matrix(1, 0, 0, 1, 27.009001, -39.238998)">
-                <path fill="#4285F4" d="M -3.264 51.509 C -3.264 50.719 -3.334 49.969 -3.454 49.239 L -14.754 49.239 L -14.754 53.749 L -8.284 53.749 C -8.574 55.229 -9.424 56.479 -10.684 57.329 L -10.684 60.329 L -6.824 60.329 C -4.564 58.239 -3.264 55.159 -3.264 51.509 Z"/>
-                <path fill="#34A853" d="M -14.754 63.239 C -11.514 63.239 -8.804 62.159 -6.824 60.329 L -10.684 57.329 C -11.764 58.049 -13.134 58.489 -14.754 58.489 C -17.884 58.489 -20.534 56.379 -21.484 53.529 L -25.464 53.529 L -25.464 56.619 C -23.494 60.539 -19.444 63.239 -14.754 63.239 Z"/>
-                <path fill="#FBBC05" d="M -21.484 53.529 C -21.734 52.809 -21.864 52.039 -21.864 51.239 C -21.864 50.439 -21.724 49.669 -21.484 48.949 L -21.484 45.859 L -25.464 45.859 C -26.284 47.479 -26.754 49.299 -26.754 51.239 C -26.754 53.179 -26.284 54.999 -25.464 56.619 L -21.484 53.529 Z"/>
-                <path fill="#EA4335" d="M -14.754 43.989 C -12.984 43.989 -11.404 44.599 -10.154 45.789 L -6.734 42.369 C -8.804 40.429 -11.514 39.239 -14.754 39.239 C -19.444 39.239 -23.494 41.939 -25.464 45.859 L -21.484 48.949 C -20.534 46.099 -17.884 43.989 -14.754 43.989 Z"/>
-              </g>
+              <path d="M22.56 12.25c0-.78-.07-1.53-.2-2.25H12v4.26h5.92c-.26 1.37-1.04 2.53-2.21 3.31v2.77h3.57c2.08-1.92 3.28-4.74 3.28-8.09z" fill="#4285F4"/>
+              <path d="M12 23c2.97 0 5.46-.98 7.28-2.66l-3.57-2.77c-.98.66-2.23 1.06-3.71 1.06-2.86 0-5.29-1.93-6.16-4.53H2.18v2.84C3.99 20.53 7.7 23 12 23z" fill="#34A853"/>
+              <path d="M5.84 14.09c-.22-.66-.35-1.36-.35-2.09s.13-1.43.35-2.09V7.07H2.18C1.43 8.55 1 10.22 1 12s.43 3.45 1.18 4.93l2.85-2.22.81-.62z" fill="#FBBC05"/>
+              <path d="M12 5.38c1.62 0 3.06.56 4.21 1.64l3.15-3.15C17.45 2.09 14.97 1 12 1 7.7 1 3.99 3.47 2.18 7.07l3.66 2.84c.87-2.6 3.3-4.53 6.16-4.53z" fill="#EA4335"/>
+              <path d="M1 1h22v22H1z" fill="none"/>
             </svg>
-            <span className="text-[15px] font-inter font-semibold text-[var(--color-text-primary)]">Continue with Google</span>
+            <span>Google Subroutine</span>
           </button>
+        </div>
+      </div>
+
+      {/* RIGHT PANEL - Elegant Graphic (Previously Left) */}
+      <div 
+        className="hidden lg:flex w-[50%] p-16 flex-col justify-between relative overflow-hidden border-l border-[var(--color-border)]"
+        style={{ backgroundImage: "linear-gradient(rgba(249, 248, 246, 0.8), rgba(249, 248, 246, 0.95)), url('/Graffiti (8ft x 8ft).png')", backgroundSize: 'cover' }}
+      >
+        <div className="relative z-10">
+          <div className="flex items-center gap-3">
+            <Sparkles className="w-8 h-8 text-[var(--color-accent)]" />
+            <h1 className="font-serif font-bold text-3xl text-[var(--color-primary)] tracking-tight">AI Sajan Shah</h1>
+          </div>
+        </div>
+
+        <div className="relative z-10 max-w-lg mt-20">
+          <h2 className="text-5xl lg:text-6xl font-serif font-bold text-[var(--color-primary)] leading-[1.1] mb-8">
+            A Roadmap to True Potential.
+          </h2>
+          <p className="text-lg text-[var(--color-text-secondary)] font-sans leading-relaxed mb-12">
+            Optimization is a journey. Connect with AI agents specialized in neuroscience, goals, and career paths.
+          </p>
+
+          <div className="flex flex-col gap-6">
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full border border-[var(--color-accent)] flex items-center justify-center shrink-0 bg-white">
+                <Brain className="w-5 h-5 text-[var(--color-accent)]" />
+              </div>
+              <div>
+                <h4 className="font-serif text-xl font-bold text-[var(--color-primary)]">Cognitive Mastery</h4>
+                <p className="text-[14px] text-[var(--color-text-secondary)] font-sans mt-1">Unlock scientifically-proven study and memory techniques.</p>
+              </div>
+            </div>
+            
+            <div className="flex items-start gap-4">
+              <div className="w-12 h-12 rounded-full border border-[var(--color-accent)] flex items-center justify-center shrink-0 bg-white">
+                <Target className="w-5 h-5 text-[var(--color-accent)]" />
+              </div>
+              <div>
+                <h4 className="font-serif text-xl font-bold text-[var(--color-primary)]">Goal Architect</h4>
+                <p className="text-[14px] text-[var(--color-text-secondary)] font-sans mt-1">Structure your ambitions into a 90-day actionable framework.</p>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div className="relative z-10 mt-auto pt-16 flex justify-end">
+           <p className="font-cursive text-3xl text-[var(--color-primary)] -rotate-2">
+             The Sajan Shah Family
+           </p>
         </div>
       </div>
     </div>

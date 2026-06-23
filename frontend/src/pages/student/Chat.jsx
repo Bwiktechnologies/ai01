@@ -207,25 +207,23 @@ const Chat = () => {
   };
 
   return (
-    <div className="flex flex-col h-[calc(100vh-56px-64px)] lg:h-[calc(100vh-64px)] bg-[var(--color-bg)] overflow-hidden">
+    <div className="flex flex-col flex-1 h-full bg-[var(--color-bg)] relative overflow-hidden">
       
       {/* Chat Header */}
-      <div className="h-[68px] bg-[var(--color-card)] border-b border-[var(--color-border)] px-5 flex items-center justify-between shrink-0">
+      <div className="h-[68px] bg-white border-b border-[var(--color-border)] px-5 flex items-center justify-between shrink-0 relative z-10">
         <div className="flex items-center gap-3">
           <div className="relative">
-            <div className="w-[42px] h-[42px] rounded-full bg-gradient-to-br from-[#FF6B35] to-[#E55A28] flex items-center justify-center">
-              <span className="text-white font-poppins font-bold text-[16px]">SS</span>
+            <div className="w-[42px] h-[42px] rounded-full bg-[var(--color-bg)] border border-[var(--color-border)] flex items-center justify-center">
+              <span className="text-[var(--color-primary)] font-serif font-bold text-[16px]">SS</span>
             </div>
-            <div className="absolute bottom-0 right-0 w-[10px] h-[10px] rounded-full bg-[#10B981] border-2 border-white">
-              <div className="absolute inset-0 rounded-full bg-[#10B981] animate-ping opacity-75"></div>
-            </div>
+            <div className="absolute bottom-0 right-0 w-[10px] h-[10px] rounded-full bg-green-500 border-2 border-white"></div>
           </div>
           <div>
-            <h2 className="text-[16px] font-poppins font-bold text-[var(--color-text-primary)]">
+            <h2 className="text-[16px] font-serif font-bold text-[var(--color-primary)]">
               AI Sajan Shah
             </h2>
-            <div className="text-[12px] font-inter text-[#10B981] flex items-center gap-1 mt-0.5">
-              <div className="w-1.5 h-1.5 rounded-full bg-[#10B981]"></div>
+            <div className="text-[12px] font-sans text-[var(--color-text-secondary)] flex items-center gap-1 mt-0.5">
+              <div className="w-1.5 h-1.5 rounded-full bg-green-500"></div>
               Online • Your personal mentor
             </div>
           </div>
@@ -233,16 +231,16 @@ const Chat = () => {
         
         <div className="flex items-center gap-2">
           {/* Language / Info buttons */}
-          <button className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-gray-100 text-gray-500 transition-colors">
+          <button className="w-9 h-9 rounded-full flex items-center justify-center hover:bg-[var(--color-bg)] text-[var(--color-text-hint)] hover:text-[var(--color-primary)] transition-colors">
             <Info className="w-5 h-5" />
           </button>
         </div>
       </div>
 
       {/* Messages Area */}
-      <div className="flex-1 overflow-y-auto p-4 lg:p-5 pb-2">
+      <div className="flex-1 overflow-y-auto p-4 lg:p-5 pb-2 relative z-10">
         <div className="text-center mb-6 mt-2">
-          <span className="text-[12px] font-inter text-text-hint bg-[var(--color-border)]/50 px-3 py-1 rounded-full">
+          <span className="text-[12px] font-sans text-[var(--color-text-hint)] bg-white px-3 py-1 rounded-full border border-[var(--color-border)]">
             Today
           </span>
         </div>
@@ -264,23 +262,23 @@ const Chat = () => {
       </div>
 
       {/* Input Area */}
-      <div className="bg-[var(--color-card)] border-t border-[var(--color-border)] z-30 shrink-0">
+      <div className="bg-white border-t border-[var(--color-border)] z-30 shrink-0 relative">
         <QuickChips onChipClick={(chip) => setInputValue(chip)} />
         
         <div className="p-3 lg:p-4 pb-[max(12px,env(safe-area-inset-bottom))] flex flex-col gap-2">
           {selectedImage && (
             <div className="relative self-start ml-[46px]">
-              <img src={selectedImage} alt="Preview" className="h-24 rounded-xl border border-[var(--color-border)] object-cover shadow-sm" />
+              <img src={selectedImage} alt="Preview" className="h-24 rounded-lg border border-[var(--color-border)] object-cover shadow-sm" />
               <button 
                 onClick={handleRemoveImage}
-                className="absolute -top-2 -right-2 bg-[var(--color-card)] text-red-500 rounded-full p-1 shadow-md border border-[var(--color-border)] hover:bg-red-500/10 transition-colors"
+                className="absolute -top-2 -right-2 bg-white text-red-500 rounded-full p-1 shadow-md border border-[var(--color-border)] hover:bg-red-50 transition-colors"
               >
                 <X className="w-3 h-3" />
               </button>
             </div>
           )}
           
-          <div className="flex items-end gap-2 w-full">
+          <div className="flex items-end gap-2 w-full max-w-4xl mx-auto">
             <input 
               type="file" 
               accept="image/*" 
@@ -290,7 +288,7 @@ const Chat = () => {
             />
             <button 
               onClick={() => fileInputRef.current?.click()}
-              className="w-9 h-9 rounded-lg flex items-center justify-center shrink-0 text-[#9CA3AF] hover:bg-gray-100 hover:text-[var(--color-accent)] transition-colors mb-1"
+              className="w-10 h-10 rounded-full flex items-center justify-center shrink-0 text-[var(--color-text-hint)] hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] transition-colors mb-1"
             >
               <Paperclip className="w-[18px] h-[18px]" />
             </button>
@@ -301,30 +299,30 @@ const Chat = () => {
             onChange={handleInputChange}
             onKeyDown={handleKeyDown}
             placeholder="Message Sajan Shah..."
-            className="flex-1 min-h-[44px] max-h-[120px] bg-[var(--color-bg)] border border-[var(--color-border)] rounded-[20px] px-4 py-2.5 text-[15px] font-inter outline-none focus:bg-[var(--color-card)] focus:border-[var(--color-accent)] resize-none overflow-y-auto transition-colors scrollbar-hide"
+            className="flex-1 min-h-[48px] max-h-[120px] bg-[var(--color-bg)] border border-[var(--color-border)] focus:border-[var(--color-accent)] rounded-[24px] px-5 py-3 text-[15px] font-sans text-[var(--color-primary)] placeholder-[var(--color-text-hint)] outline-none resize-none overflow-y-auto transition-colors scrollbar-hide"
             rows="1"
           />
           
           <button 
             onClick={handleSend}
             disabled={(!inputValue.trim() && !selectedImage) || isTyping}
-            className={`w-[42px] h-[42px] rounded-full flex items-center justify-center shrink-0 transition-all mb-[1px]
+            className={`w-[48px] h-[48px] rounded-full flex items-center justify-center shrink-0 transition-all mb-[1px]
               ${(inputValue.trim() || selectedImage) && !isTyping 
-                ? 'bg-[var(--color-accent)] shadow-orange text-white hover:scale-105 hover:bg-[#E55A28]' 
-                : 'bg-[var(--color-border)] text-[#9CA3AF]'
+                ? 'bg-[var(--color-accent)] text-white hover:opacity-90' 
+                : 'bg-[var(--color-bg)] text-[var(--color-text-hint)] border border-[var(--color-border)]'
               }`}
           >
             {isTyping ? (
-               <div className="w-4 h-4 border-2 border-white/20 border-t-white rounded-full animate-spin"></div>
+               <div className="w-5 h-5 border-2 border-[var(--color-text-hint)] border-t-[var(--color-primary)] rounded-full animate-spin"></div>
             ) : (
-              <SendHorizontal className="w-[18px] h-[18px]" />
+              <SendHorizontal className="w-5 h-5 ml-[-2px]" />
             )}
           </button>
         </div>
         </div>
         
-        <div className="text-center pb-2">
-          <span className="text-[10px] text-text-hint">Powered by Sajan Shah's real teachings</span>
+        <div className="text-center pb-3">
+          <span className="text-xs font-sans text-[var(--color-text-hint)]">Powered by Sajan Shah's teachings</span>
         </div>
       </div>
     </div>

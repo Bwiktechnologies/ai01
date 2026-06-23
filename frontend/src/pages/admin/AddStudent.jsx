@@ -84,20 +84,20 @@ const AddStudent = () => {
   };
 
   return (
-    <div className="p-8 max-w-4xl mx-auto w-full">
+    <div className="p-8 lg:p-12 max-w-4xl mx-auto w-full">
       <ToastContainer toasts={toasts} removeToast={removeToast} />
       
-      <div className="mb-8">
-        <h2 className="text-[24px] font-poppins font-bold text-[var(--color-text-primary)]">Add New Student</h2>
-        <p className="text-[14px] font-inter text-text-secondary mt-1">
+      <div className="mb-10">
+        <h2 className="text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] tracking-tight">Add New Student.</h2>
+        <p className="text-[16px] font-sans text-[var(--color-text-secondary)] mt-2">
           Create a new account manually. They will receive an email with their credentials.
         </p>
       </div>
 
-      <div className="glass-card rounded-2xl shadow-card p-6 sm:p-8">
-        <form onSubmit={handleSubmit} className="flex flex-col gap-6">
+      <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm p-8 sm:p-10">
+        <form onSubmit={handleSubmit} className="flex flex-col gap-8">
           
-          <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
+          <div className="grid grid-cols-1 md:grid-cols-2 gap-8">
             <Input
               label="Full Name"
               name="name"
@@ -126,14 +126,14 @@ const AddStudent = () => {
             />
 
             <div>
-              <label className="block text-[13px] font-semibold text-text-secondary mb-1.5">
+              <label className="block text-xs font-sans font-bold text-[var(--color-text-secondary)] mb-2 uppercase tracking-widest">
                 Workshop / Origin
               </label>
               <select
                 name="workshop"
                 value={formData.workshop}
                 onChange={handleChange}
-                className="w-full bg-black border-[1.5px] border-[#1f2937] rounded-[10px] py-3 px-4 text-[15px] text-white focus:outline-none focus:border-[var(--color-accent)] focus:ring-[3px] focus:ring-[var(--color-accent)]/12"
+                className="w-full bg-white border border-[var(--color-border)] rounded-lg py-3 px-4 text-[15px] text-[var(--color-primary)] focus:outline-none focus:border-[var(--color-primary)] focus:ring-1 focus:ring-[var(--color-primary)] transition-all duration-200"
               >
                 <option value="Memory Workshop">Memory Workshop</option>
                 <option value="Goal Setting Mastery">Goal Setting Mastery</option>
@@ -144,18 +144,18 @@ const AddStudent = () => {
             </div>
           </div>
 
-          <div className="border-t border-[var(--color-border)] pt-6 mt-2">
-            <div className="flex justify-between items-end mb-4">
+          <div className="border-t border-[var(--color-border)] pt-8 mt-2">
+            <div className="flex justify-between items-end mb-6">
               <div>
-                <h3 className="text-[15px] font-poppins font-semibold text-[var(--color-text-primary)]">Authentication</h3>
-                <p className="text-[12px] font-inter text-text-hint mt-0.5">Set an initial password for the student.</p>
+                <h3 className="text-xl font-serif font-bold text-[var(--color-primary)]">Authentication</h3>
+                <p className="text-[14px] font-sans text-[var(--color-text-secondary)] mt-1">Set an initial password for the student.</p>
               </div>
               <button 
                 type="button" 
                 onClick={generatePassword}
-                className="text-[13px] font-inter font-medium text-[var(--color-accent)] hover:underline"
+                className="text-[14px] font-sans font-semibold text-[var(--color-primary)] hover:underline flex items-center gap-2"
               >
-                Generate Random
+                <Lock className="w-4 h-4" /> Generate Random
               </button>
             </div>
             
@@ -171,32 +171,32 @@ const AddStudent = () => {
             </div>
           </div>
 
-          <div className="bg-orange-500/10 border border-orange-500/20 rounded-xl p-4 flex items-start gap-3 mt-2">
+          <div className="bg-[var(--color-bg)] border border-[var(--color-border)] rounded-xl p-5 flex items-start gap-4 mt-4">
             <input 
               type="checkbox" 
               name="sendEmail"
               id="sendEmail"
               checked={formData.sendEmail}
               onChange={handleChange}
-              className="mt-1 w-4 h-4 rounded border-gray-300 text-[var(--color-accent)] focus:ring-[var(--color-accent)]" 
+              className="mt-1 w-5 h-5 rounded border-[var(--color-border)] text-[var(--color-primary)] focus:ring-[var(--color-primary)]" 
             />
             <div>
-              <label htmlFor="sendEmail" className="text-[14px] font-poppins font-semibold text-orange-400 cursor-pointer">
+              <label htmlFor="sendEmail" className="text-[15px] font-sans font-bold text-[var(--color-primary)] cursor-pointer">
                 Send Welcome Email
               </label>
-              <p className="text-[13px] font-inter text-orange-400/80 mt-1">
+              <p className="text-[14px] font-sans text-[var(--color-text-secondary)] mt-1 leading-relaxed">
                 This will automatically send an email via SendGrid to the student containing their login credentials and a link to the portal.
               </p>
             </div>
           </div>
 
-          <div className="flex justify-end gap-3 pt-4 border-t border-[var(--color-border)]">
-            <Button variant="ghost" type="button" onClick={() => window.history.back()}>
+          <div className="flex justify-end gap-4 pt-8 border-t border-[var(--color-border)]">
+            <button type="button" onClick={() => window.history.back()} className="px-6 py-3 rounded-lg font-sans font-semibold text-[var(--color-text-secondary)] hover:text-[var(--color-primary)] hover:bg-[var(--color-bg)] transition-colors">
               Cancel
-            </Button>
-            <Button type="submit" isLoading={isSubmitting} className="px-8">
-              Create Account
-            </Button>
+            </button>
+            <button type="submit" disabled={isSubmitting} className="btn-elegant px-8 flex items-center gap-2">
+              {isSubmitting ? 'Creating...' : <><Save className="w-4 h-4" /> Create Account</>}
+            </button>
           </div>
         </form>
       </div>

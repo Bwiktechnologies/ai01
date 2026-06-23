@@ -69,35 +69,38 @@ const AllStudents = () => {
   );
 
   return (
-    <div className="p-8 max-w-7xl mx-auto w-full">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-4">
+    <div className="w-full h-full">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-10 gap-6">
         <div>
-          <h2 className="text-[24px] font-poppins font-bold text-[var(--color-text-primary)]">All Students</h2>
-          <p className="text-[14px] font-inter text-text-secondary mt-1">
+          <h2 className="text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] tracking-tight">All Students.</h2>
+          <p className="text-[16px] font-sans text-[var(--color-text-secondary)] mt-2">
             Manage student access and view profiles.
           </p>
         </div>
-        <Button className="shrink-0" onClick={() => window.location.href='/admin/add-student'}>
+        <button className="btn-elegant shrink-0" onClick={() => window.location.href='/admin/add-student'}>
           + Add New Student
-        </Button>
+        </button>
       </div>
 
-      <div className="glass-card rounded-2xl shadow-card overflow-hidden">
+      <div className="bg-white border border-[var(--color-border)] rounded-2xl shadow-sm overflow-hidden">
         {/* Toolbar */}
-        <div className="p-5 border-b border-[var(--color-border)] flex flex-col sm:flex-row gap-4 justify-between items-center bg-[rgba(0,0,0,0.2)]">
-          <div className="w-full sm:w-[350px]">
-            <Input 
-              icon={Search} 
+        <div className="p-8 border-b border-[var(--color-border)] flex flex-col sm:flex-row gap-4 justify-between items-center bg-[var(--color-bg)]">
+          <div className="w-full sm:w-[400px] relative">
+            <div className="absolute inset-y-0 left-0 pl-4 flex items-center pointer-events-none">
+              <Search className="w-5 h-5 text-[var(--color-text-hint)]" />
+            </div>
+            <input 
+              type="text"
               placeholder="Search by name or email..." 
               value={searchTerm}
               onChange={(e) => setSearchTerm(e.target.value)}
-              className="bg-black"
+              className="w-full h-12 pl-12 pr-4 rounded-lg border border-[var(--color-border)] bg-white text-[var(--color-primary)] placeholder-[var(--color-text-hint)] focus:border-[var(--color-accent)] focus:ring-1 focus:ring-[var(--color-accent)] transition-all outline-none font-sans text-sm"
             />
           </div>
           <div className="flex items-center gap-3 w-full sm:w-auto">
-            <Button variant="ghost" className="flex items-center gap-2 !py-2.5 h-[46px] w-full sm:w-auto">
+            <button className="flex items-center justify-center gap-2 h-12 px-6 rounded-lg border border-[var(--color-border)] bg-white text-[var(--color-primary)] font-sans font-semibold text-sm hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] transition-all w-full sm:w-auto">
               <Filter className="w-4 h-4" /> Filter
-            </Button>
+            </button>
           </div>
         </div>
 
@@ -105,62 +108,62 @@ const AllStudents = () => {
         <div className="overflow-x-auto">
           <table className="w-full text-left border-collapse min-w-[800px]">
             <thead>
-              <tr className="bg-[var(--color-section-alt)] border-b border-[var(--color-border)]">
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Student Info</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Contact</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Workshop</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Date Added</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide">Status</th>
-                <th className="px-5 py-3 text-[11px] font-inter font-bold text-[#9CA3AF] uppercase tracking-wide text-right">Actions</th>
+              <tr className="bg-white border-b border-[var(--color-border)]">
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Student Info</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Contact</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Workshop</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Date Added</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest">Status</th>
+                <th className="px-8 py-5 text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest text-right">Actions</th>
               </tr>
             </thead>
             <tbody>
               {loading ? (
-                <tr><td colSpan="6" className="text-center py-8 text-gray-500 font-inter">Loading students...</td></tr>
+                <tr><td colSpan="6" className="text-center py-12 text-[var(--color-text-secondary)] font-sans">Loading students...</td></tr>
               ) : filteredStudents.length === 0 ? (
-                <tr><td colSpan="6" className="text-center py-8 text-gray-500 font-inter">No students found.</td></tr>
+                <tr><td colSpan="6" className="text-center py-12 text-[var(--color-text-secondary)] font-sans">No students found.</td></tr>
               ) : (
                 filteredStudents.map((student) => (
-                  <tr key={student.id} className="border-b border-[var(--color-border)] hover:bg-[rgba(255,255,255,0.02)] transition-colors">
-                    <td className="px-5 py-4">
-                      <div className="flex items-center gap-3">
-                        <div className="w-8 h-8 rounded-full bg-blue-500/10 text-blue-400 flex items-center justify-center font-bold text-xs shrink-0">
+                  <tr key={student.id} className="border-b border-[var(--color-border)] hover:bg-[var(--color-bg)] transition-colors bg-white">
+                    <td className="px-8 py-6">
+                      <div className="flex items-center gap-4">
+                        <div className="w-10 h-10 rounded-full bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-primary)] flex items-center justify-center font-serif font-bold text-lg shrink-0">
                           {student.name ? student.name.substring(0,2).toUpperCase() : 'ST'}
                         </div>
-                        <span className="text-[14px] font-inter font-semibold text-[var(--color-text-primary)]">{student.name}</span>
+                        <span className="text-[15px] font-sans font-bold text-[var(--color-primary)]">{student.name}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4">
+                    <td className="px-8 py-6">
                       <div className="flex flex-col">
-                        <span className="text-[13px] font-inter text-text-secondary">{student.email}</span>
-                        <span className="text-[12px] font-inter text-[#9CA3AF]">{student.phone}</span>
+                        <span className="text-[14px] font-sans text-[var(--color-text-secondary)]">{student.email}</span>
+                        <span className="text-[12px] font-sans text-[var(--color-text-hint)] mt-1">{student.phone}</span>
                       </div>
                     </td>
-                    <td className="px-5 py-4 text-[13px] font-inter text-text-secondary">{student.workshop || '-'}</td>
-                    <td className="px-5 py-4 text-[13px] font-inter text-text-secondary">
+                    <td className="px-8 py-6 text-[14px] font-sans text-[var(--color-text-secondary)]">{student.workshop || '-'}</td>
+                    <td className="px-8 py-6 text-[14px] font-sans text-[var(--color-text-secondary)]">
                       {student.createdAt ? new Date(student.createdAt).toLocaleDateString() : '-'}
                     </td>
-                    <td className="px-5 py-4">
-                      <span className={`inline-flex px-2.5 py-0.5 rounded-full text-[12px] font-inter font-semibold ${
-                        student.status === 'active' ? 'bg-green-500/10 text-green-400' : 'bg-gray-800 text-gray-400'
+                    <td className="px-8 py-6">
+                      <span className={`inline-flex px-3 py-1 rounded-full text-xs font-sans font-bold tracking-wide uppercase ${
+                        student.status === 'active' ? 'bg-emerald-50 text-emerald-600 border border-emerald-100' : 'bg-slate-50 text-slate-600 border border-slate-200'
                       }`}>
                         {student.status || 'active'}
                       </span>
                     </td>
-                    <td className="px-5 py-4 text-right">
-                      <div className="flex justify-end gap-2 text-gray-400">
-                        <button className="p-1.5 hover:text-blue-500 hover:bg-blue-50 rounded transition-colors" title="Resend Welcome Email">
-                          <Mail className="w-4 h-4" />
+                    <td className="px-8 py-6 text-right">
+                      <div className="flex justify-end gap-3 text-[var(--color-text-hint)]">
+                        <button className="p-2 hover:text-[var(--color-primary)] hover:bg-[var(--color-bg)] rounded-full transition-colors" title="Resend Welcome Email">
+                          <Mail className="w-5 h-5" />
                         </button>
-                        <button className="p-1.5 hover:text-orange-500 hover:bg-orange-50 rounded transition-colors" title="Edit Student">
-                          <Edit className="w-4 h-4" />
+                        <button className="p-2 hover:text-[var(--color-primary)] hover:bg-[var(--color-bg)] rounded-full transition-colors" title="Edit Student">
+                          <Edit className="w-5 h-5" />
                         </button>
                         <button 
                           onClick={() => handleDelete(student.id)}
-                          className="p-1.5 hover:text-red-500 hover:bg-red-50 rounded transition-colors" 
+                          className="p-2 hover:text-red-600 hover:bg-red-50 rounded-full transition-colors" 
                           title="Delete Student"
                         >
-                          <Trash2 className="w-4 h-4" />
+                          <Trash2 className="w-5 h-5" />
                         </button>
                       </div>
                     </td>
@@ -172,11 +175,11 @@ const AllStudents = () => {
         </div>
         
         {/* Pagination */}
-        <div className="p-5 border-t border-[var(--color-border)] flex items-center justify-between">
-          <span className="text-[13px] text-text-secondary">Showing {filteredStudents.length} students</span>
+        <div className="p-6 border-t border-[var(--color-border)] flex items-center justify-between bg-[var(--color-bg)]">
+          <span className="text-[13px] font-sans font-semibold text-[var(--color-text-secondary)] tracking-wide">Showing {filteredStudents.length} students</span>
           <div className="flex gap-2">
-            <Button variant="ghost" className="!py-1.5 !px-3 text-[13px]" disabled>Previous</Button>
-            <Button variant="ghost" className="!py-1.5 !px-4 text-[13px]" disabled={filteredStudents.length < 10}>Next</Button>
+            <button className="px-4 py-2 text-sm font-sans font-semibold text-[var(--color-text-hint)] hover:text-[var(--color-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled>Previous</button>
+            <button className="px-4 py-2 text-sm font-sans font-semibold text-[var(--color-text-hint)] hover:text-[var(--color-primary)] transition-colors disabled:opacity-50 disabled:cursor-not-allowed" disabled={filteredStudents.length < 10}>Next</button>
           </div>
         </div>
       </div>

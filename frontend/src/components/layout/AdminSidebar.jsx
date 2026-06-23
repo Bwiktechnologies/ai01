@@ -3,7 +3,7 @@ import { NavLink } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 import { 
   LayoutDashboard, BarChart2, Users, UserPlus, Upload, 
-  Mail, Code2, Gamepad2, Settings, LogOut 
+  Mail, Code2, Gamepad2, Settings, LogOut, Sparkles
 } from 'lucide-react';
 
 const AdminSidebar = () => {
@@ -42,56 +42,60 @@ const AdminSidebar = () => {
   ];
 
   return (
-    <div className="w-full h-full bg-[#1A1A2E] flex flex-col overflow-y-auto text-white/60">
+    <div className="w-full h-full bg-white flex flex-col overflow-y-auto">
       {/* Top Logo */}
-      <div className="h-[64px] border-b border-[#2D2D44] px-5 flex items-center justify-between flex-shrink-0">
-        <span className="text-[16px] font-poppins font-bold text-white">AI Sajan Shah</span>
-        <span className="bg-[#FF6B35]/20 text-[#FF6B35] border border-orange-300/30 rounded-full px-2 py-0.5 text-[10px] font-inter font-bold">
-          ADMIN
-        </span>
+      <div className="p-8 flex items-center gap-3 shrink-0">
+        <Sparkles className="w-6 h-6 text-[var(--color-accent)]" />
+        <div className="flex flex-col">
+          <div className="flex whitespace-nowrap items-baseline gap-1">
+            <span className="font-serif font-bold text-xl text-[var(--color-primary)]">AI</span>
+            <span className="font-serif font-bold text-xl text-[var(--color-primary)]">Sajan Shah</span>
+          </div>
+          <span className="text-[10px] font-sans font-bold text-[var(--color-text-hint)] tracking-widest uppercase mt-0.5">Admin Matrix</span>
+        </div>
       </div>
 
       {/* Navigation */}
-      <div className="flex-1 py-2 flex flex-col overflow-y-auto">
+      <nav className="flex-1 px-6 pb-6 overflow-y-auto overflow-x-hidden mt-4">
         {sections.map((section, idx) => (
-          <div key={idx} className="mb-2">
-            <div className="text-[10px] font-inter font-bold text-white/40 uppercase tracking-widest px-4 pt-5 pb-2">
+          <div key={idx} className="mb-6">
+            <p className="px-3 text-[10px] font-sans font-bold uppercase tracking-widest text-[var(--color-text-hint)] mb-2">
               {section.label}
+            </p>
+            <div className="space-y-1">
+              {section.items.map((item) => (
+                <NavLink
+                  key={item.path}
+                  to={item.path}
+                  end={item.exact}
+                  className={({ isActive }) => `
+                    flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-sans transition-all duration-200
+                    ${isActive 
+                      ? 'bg-[var(--color-bg)] text-[var(--color-primary)] font-semibold' 
+                      : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] font-medium'
+                    }
+                  `}
+                >
+                  {({ isActive }) => (
+                    <>
+                      <item.icon className={`w-[18px] h-[18px] ${isActive ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-hint)]'}`} />
+                      <span>{item.label}</span>
+                    </>
+                  )}
+                </NavLink>
+              ))}
             </div>
-            {section.items.map((item) => (
-              <NavLink
-                key={item.path}
-                to={item.path}
-                end={item.exact}
-                className={({ isActive }) => `
-                  flex items-center gap-3 mx-3 px-3 py-2.5 rounded-[10px] cursor-pointer transition-all duration-150
-                  ${isActive 
-                    ? 'bg-[#FF6B35] text-white' 
-                    : 'text-white/70 hover:bg-white/[0.06] hover:text-white'
-                  }
-                `}
-              >
-                {({ isActive }) => (
-                  <>
-                    <item.icon className={`w-[18px] h-[18px] ${isActive ? 'text-white' : 'text-white/50 group-hover:text-white/80'}`} />
-                    <span className={`text-[14px] font-inter ${isActive ? 'font-semibold' : 'font-medium'}`}>
-                      {item.label}
-                    </span>
-                  </>
-                )}
-              </NavLink>
-            ))}
           </div>
         ))}
-      </div>
+      </nav>
 
       {/* Bottom Logout */}
-      <div className="border-t border-white/10 p-3 mx-3 mt-auto flex-shrink-0">
+      <div className="p-6 mt-auto border-t border-[var(--color-border)] shrink-0">
         <button 
           onClick={logout}
-          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-xl text-white/60 hover:text-white hover:bg-white/[0.06] transition-colors text-[14px] font-inter font-medium text-left"
+          className="w-full flex items-center gap-3 px-3 py-2.5 rounded-lg text-[var(--color-text-secondary)] hover:text-red-600 hover:bg-red-50 transition-all duration-200 text-[14px] font-sans font-medium text-left"
         >
-          <LogOut className="w-4 h-4" />
+          <LogOut className="w-[18px] h-[18px]" />
           Logout
         </button>
       </div>

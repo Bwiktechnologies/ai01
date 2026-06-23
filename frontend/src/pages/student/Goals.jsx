@@ -1,5 +1,5 @@
 import React, { useState, useEffect } from 'react';
-import { Target, Edit2, Calendar, Clock, Check, Save, Plus, X } from 'lucide-react';
+import { Target, Edit2, Calendar, Clock, Check, Save, Plus, X, Zap, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
 import { useAuth } from '../../contexts/AuthContext';
 
@@ -66,46 +66,41 @@ const Goals = () => {
   const completedItems = weeklyActions.filter(a => a.completed).length + habits.filter(h => h.checked).length;
   const progressPercent = totalItems === 0 ? 0 : Math.round((completedItems / totalItems) * 100);
 
-  const cardStyle = { background: '#0a0a0a', border: '1px solid #1f2937' };
-
   if (!goal.title && !isEditing) {
     return (
-      <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 mt-12">
-        <div className="w-20 h-20 rounded-3xl flex items-center justify-center mb-6"
-          style={{ background: 'rgba(242,101,34,0.1)', border: '1px solid rgba(242,101,34,0.2)' }}>
-          <Target className="w-10 h-10" style={{ color: '#f26522' }} />
+      <div className="flex flex-col items-center justify-center min-h-[60vh] px-6 mt-12 relative">
+        <div className="w-24 h-24 border border-[var(--color-border)] rounded-full flex items-center justify-center mb-8 bg-white">
+          <Target className="w-10 h-10 text-[var(--color-primary)]" />
         </div>
-        <h3 className="text-[22px] font-poppins font-bold text-center text-white">No 90-Day Goal Set Yet</h3>
-        <p className="text-[14px] font-inter text-center mt-2 max-w-sm" style={{ color: '#9ca3af' }}>
-          Let's get crystal clear on where you're going. Sajan will help you set a powerful goal.
+        <h3 className="text-3xl font-serif font-bold text-center text-[var(--color-primary)] relative z-10 mb-3">No Parameters Set</h3>
+        <p className="text-[15px] font-sans text-center max-w-md text-[var(--color-text-secondary)] leading-relaxed relative z-10">
+          Let's get crystal clear on your trajectory. Sajan will compute the optimal path to your target.
         </p>
-        <button className="mt-8 px-8 py-3 rounded-xl font-inter font-bold text-white animated-gradient transition-all hover:opacity-90 hover:-translate-y-0.5"
-          style={{ boxShadow: 'var(--shadow-orange)' }}
+        <button className="mt-10 btn-elegant px-8 flex items-center gap-2"
           onClick={() => setIsEditing(true)}>
-          Set My Goal Manually
+          <Target className="w-5 h-5" /> Initialize Target
         </button>
       </div>
     );
   }
 
   return (
-    <div className="max-w-[900px] mx-auto w-full px-4 lg:px-6 py-6 lg:py-8">
+    <div className="max-w-[1000px] mx-auto w-full px-4 lg:px-6 py-6 lg:py-10">
 
       {/* Main Goal Card */}
-      <div className="rounded-[20px] p-6 mb-6 relative overflow-hidden" style={cardStyle}>
-        <div className="absolute inset-0 opacity-30 pointer-events-none"
-          style={{ background: 'radial-gradient(ellipse at top right, rgba(242,101,34,0.15) 0%, transparent 60%)' }} />
-        <div className="relative z-10">
-          <div className="flex items-center justify-between mb-4">
-            <span className="text-[11px] font-inter font-bold uppercase tracking-widest px-3 py-1 rounded-full"
-              style={{ color: '#f26522', background: 'rgba(242,101,34,0.12)', border: '1px solid rgba(242,101,34,0.2)' }}>
-              My 90-Day Goal
-            </span>
+      <div className="bg-white border border-[var(--color-border)] p-8 mb-8">
+        
+        <div>
+          <div className="flex items-center justify-between mb-6">
+            <div className="inline-flex items-center gap-2 px-3 py-1.5 bg-[var(--color-bg)] border border-[var(--color-border)]">
+              <Target className="w-4 h-4 text-[var(--color-text-secondary)]" />
+              <span className="text-[12px] font-sans font-bold text-[var(--color-text-secondary)] uppercase tracking-[0.2em]">
+                Primary Directive (90 Days)
+              </span>
+            </div>
             {!isEditing && (
-              <button className="transition-colors p-2 rounded-lg hover:bg-white/5" style={{ color: '#6b7280' }}
-                onClick={() => setIsEditing(true)}
-                onMouseEnter={e => e.currentTarget.style.color = '#f26522'}
-                onMouseLeave={e => e.currentTarget.style.color = '#6b7280'}>
+              <button className="p-2.5 bg-white hover:bg-[var(--color-bg)] border border-[var(--color-border)] text-[var(--color-primary)] transition-colors"
+                onClick={() => setIsEditing(true)}>
                 <Edit2 className="w-4 h-4" />
               </button>
             )}
@@ -118,35 +113,36 @@ const Goals = () => {
                 value={tempTitle}
                 onChange={(e) => setTempTitle(e.target.value)}
                 onKeyDown={(e) => e.key === 'Enter' && saveGoal()}
-                className="w-full bg-[#050505] border border-[#1f2937] text-white px-4 py-2 rounded-xl focus:outline-none focus:border-[#f26522]"
+                className="w-full bg-white border border-[var(--color-border)] text-[var(--color-primary)] px-5 py-3 focus:outline-none focus:border-[var(--color-primary)] transition-colors font-sans"
                 autoFocus
               />
-              <button onClick={saveGoal} className="bg-[#f26522] text-white p-2.5 rounded-xl hover:bg-[#d4541a] transition-colors shrink-0">
+              <button onClick={saveGoal} className="btn-elegant px-4 h-12">
                 <Save className="w-5 h-5" />
               </button>
             </div>
           ) : (
-            <h2 className="text-[22px] font-poppins font-bold text-white leading-snug">{goal.title}</h2>
+            <h2 className="text-3xl lg:text-4xl font-serif font-bold text-[var(--color-primary)] leading-tight mb-2 tracking-tight">
+              {goal.title}
+            </h2>
           )}
 
-          <div className="mt-6">
-            <div className="flex justify-between items-end mb-2">
-              <span className="text-[13px] font-inter font-medium" style={{ color: '#9ca3af' }}>Overall Progress</span>
-              <span className="text-[14px] font-inter font-bold" style={{ color: '#f26522' }}>{progressPercent}%</span>
+          <div className="mt-8">
+            <div className="flex justify-between items-end mb-3">
+              <span className="text-[14px] font-sans font-medium text-[var(--color-text-secondary)]">Optimization Progress</span>
+              <span className="text-[16px] font-sans font-bold text-[var(--color-primary)]">{progressPercent}%</span>
             </div>
-            <div className="w-full h-2.5 rounded-full overflow-hidden" style={{ background: '#1f2937' }}>
-              <div className="h-full rounded-full animated-gradient transition-all duration-1000"
+            <div className="w-full h-2 bg-[var(--color-bg)] overflow-hidden border border-[var(--color-border)]">
+              <div className="h-full bg-[var(--color-primary)] transition-all duration-1000 ease-out"
                 style={{ width: `${Math.max(2, progressPercent)}%` }} />
             </div>
           </div>
-          <div className="flex items-center gap-6 mt-5 text-[13px] font-inter font-medium">
-            <div className="flex items-center gap-1.5" style={{ color: '#9ca3af' }}>
+          <div className="flex items-center gap-6 mt-6 text-[14px] font-sans font-medium">
+            <div className="flex items-center gap-2 text-[var(--color-text-secondary)] bg-[var(--color-bg)] px-3 py-1.5 border border-[var(--color-border)]">
               <Calendar className="w-4 h-4" />
               Target: {goal.targetDate.toLocaleDateString()}
             </div>
-            <div className={`flex items-center gap-1.5`}
-              style={{ color: daysRemaining < 14 ? '#F59E0B' : '#9ca3af' }}>
-              <Clock className="w-4 h-4" />
+            <div className={`flex items-center gap-2 px-3 py-1.5 border ${daysRemaining < 14 ? 'text-orange-600 bg-orange-50 border-orange-200' : 'text-[var(--color-text-secondary)] bg-[var(--color-bg)] border-[var(--color-border)]'}`}>
+              <Clock className={`w-4 h-4 ${daysRemaining < 14 ? 'text-orange-600' : 'text-[var(--color-text-secondary)]'}`} />
               {daysRemaining} days remaining
             </div>
           </div>
@@ -155,57 +151,59 @@ const Goals = () => {
 
       <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
         {/* Weekly Actions */}
-        <div className="rounded-[16px] p-5 flex flex-col" style={cardStyle}>
-          <div className="flex items-center justify-between mb-4">
-            <h3 className="text-[16px] font-poppins font-semibold text-white">This Week's Actions</h3>
+        <div className="p-6 lg:p-8 flex flex-col bg-white border border-[var(--color-border)]">
+          <div className="flex items-center justify-between mb-6">
+            <div className="flex items-center gap-3">
+              <div className="w-10 h-10 border border-[var(--color-border)] rounded-full flex items-center justify-center bg-[var(--color-bg)]">
+                <Target className="w-5 h-5 text-[var(--color-primary)]" />
+              </div>
+              <h3 className="text-lg font-serif font-bold text-[var(--color-primary)]">Action Vectors</h3>
+            </div>
             <button onClick={() => setIsAddingAction(true)}
-              className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-              style={{ background: 'rgba(242,101,34,0.1)', color: '#f26522' }}
-              onMouseEnter={e => e.currentTarget.style.background = 'rgba(242,101,34,0.2)'}
-              onMouseLeave={e => e.currentTarget.style.background = 'rgba(242,101,34,0.1)'}>
-              <Plus className="w-4 h-4" />
+              className="w-10 h-10 border border-[var(--color-border)] bg-white hover:bg-[var(--color-bg)] text-[var(--color-primary)] flex items-center justify-center transition-colors">
+              <Plus className="w-5 h-5" />
             </button>
           </div>
           
-          <div className="flex-1 overflow-y-auto pr-1">
-            <div className="flex flex-col">
-              {weeklyActions.map((action, idx) => (
+          <div className="flex-1 overflow-y-auto pr-2">
+            <div className="flex flex-col gap-3">
+              {weeklyActions.map((action) => (
                 <div key={action.id}
-                  className="flex items-start gap-3 py-3 cursor-pointer group"
-                  style={{ borderBottom: idx !== weeklyActions.length - 1 ? '1px solid #1f2937' : 'none' }}
+                  className="flex items-start gap-4 p-4 border border-[var(--color-border)] bg-[var(--color-bg)] cursor-pointer hover:border-[var(--color-primary)] transition-colors"
                   onClick={() => toggleAction(action.id)}>
-                  <div className="w-5 h-5 rounded-[6px] mt-0.5 flex items-center justify-center shrink-0 transition-colors"
-                    style={{ border: action.completed ? 'none' : '1.5px solid #374151', background: action.completed ? '#f26522' : 'transparent' }}>
+                  <div className={`w-5 h-5 rounded-[4px] mt-0.5 flex items-center justify-center shrink-0 border ${action.completed ? 'bg-[var(--color-primary)] border-[var(--color-primary)]' : 'bg-white border-[var(--color-border)]'}`}>
                     {action.completed && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
                   </div>
-                  <span className="text-[14px] font-inter pt-0.5 transition-colors group-hover:text-white"
-                    style={{ color: action.completed ? '#6b7280' : '#e5e7eb', textDecoration: action.completed ? 'line-through' : 'none' }}>
+                  <span className={`text-[15px] font-sans pt-px transition-colors ${action.completed ? 'text-[var(--color-text-hint)] line-through' : 'text-[var(--color-primary)]'}`}>
                     {action.text}
                   </span>
                 </div>
               ))}
               {weeklyActions.length === 0 && !isAddingAction && (
-                <p className="text-[13px] font-inter text-center py-6" style={{ color: '#6b7280' }}>
-                  No actions set yet. Add a new action for this week!
-                </p>
+                <div className="text-center py-8 px-4 border border-[var(--color-border)] bg-[var(--color-bg)] mt-2">
+                  <Target className="w-6 h-6 text-[var(--color-text-hint)] mx-auto mb-3" />
+                  <p className="text-[14px] font-sans text-[var(--color-text-secondary)]">
+                    No active parameters. Define a new action to generate momentum.
+                  </p>
+                </div>
               )}
             </div>
             
             {isAddingAction && (
-              <div className="mt-3 flex items-center gap-2">
+              <div className="mt-4 flex items-center gap-2 bg-[var(--color-bg)] p-2 border border-[var(--color-border)]">
                 <input 
                   type="text" 
-                  placeholder="e.g., Read Chapter 1"
+                  placeholder="Define new objective..."
                   value={newActionText}
                   onChange={(e) => setNewActionText(e.target.value)}
                   onKeyDown={(e) => e.key === 'Enter' && addAction()}
-                  className="flex-1 bg-[#050505] border border-[#1f2937] text-white px-3 py-2 rounded-lg text-[13px] focus:outline-none focus:border-[#f26522]"
+                  className="flex-1 bg-transparent border-none text-[var(--color-primary)] px-3 py-2 text-[14px] focus:outline-none placeholder-[var(--color-text-hint)] font-sans"
                   autoFocus
                 />
-                <button onClick={addAction} className="bg-[#f26522] text-white p-2 rounded-lg hover:bg-[#d4541a]">
+                <button onClick={addAction} className="btn-elegant w-10 h-10 px-0 flex justify-center items-center">
                   <Check className="w-4 h-4" />
                 </button>
-                <button onClick={() => setIsAddingAction(false)} className="bg-[#1f2937] text-white p-2 rounded-lg hover:bg-[#374151]">
+                <button onClick={() => setIsAddingAction(false)} className="w-10 h-10 border border-[var(--color-border)] bg-white text-[var(--color-primary)] flex justify-center items-center">
                   <X className="w-4 h-4" />
                 </button>
               </div>
@@ -215,61 +213,60 @@ const Goals = () => {
 
         <div className="flex flex-col gap-6">
           {/* Daily Habits */}
-          <div className="rounded-[16px] p-5 flex flex-col" style={cardStyle}>
-            <div className="flex items-center justify-between mb-4">
-              <h3 className="text-[16px] font-poppins font-semibold text-white">Daily Habits</h3>
+          <div className="p-6 lg:p-8 flex flex-col bg-white border border-[var(--color-border)]">
+            <div className="flex items-center justify-between mb-6">
+              <div className="flex items-center gap-3">
+                <div className="w-10 h-10 border border-[var(--color-border)] rounded-full flex items-center justify-center bg-[var(--color-bg)]">
+                  <Zap className="w-5 h-5 text-[var(--color-primary)]" />
+                </div>
+                <h3 className="text-lg font-serif font-bold text-[var(--color-primary)]">Neural Habits</h3>
+              </div>
               <button onClick={() => setIsAddingHabit(true)}
-                className="w-8 h-8 rounded-lg flex items-center justify-center transition-colors"
-                style={{ background: 'rgba(242,101,34,0.1)', color: '#f26522' }}
-                onMouseEnter={e => e.currentTarget.style.background = 'rgba(242,101,34,0.2)'}
-                onMouseLeave={e => e.currentTarget.style.background = 'rgba(242,101,34,0.1)'}>
-                <Plus className="w-4 h-4" />
+                className="w-10 h-10 border border-[var(--color-border)] bg-white hover:bg-[var(--color-bg)] text-[var(--color-primary)] flex items-center justify-center transition-colors">
+                <Plus className="w-5 h-5" />
               </button>
             </div>
             
             <div className="flex-1">
-              <div className="flex flex-col gap-1">
+              <div className="flex flex-col gap-3">
                 {habits.map((habit) => (
                   <div key={habit.id} onClick={() => toggleHabit(habit.id)}
-                    className="flex items-center justify-between py-2 px-2 rounded-lg cursor-pointer transition-colors"
-                    onMouseEnter={e => e.currentTarget.style.background = 'rgba(255,255,255,0.04)'}
-                    onMouseLeave={e => e.currentTarget.style.background = 'transparent'}>
-                    <div className="flex items-center gap-3">
-                      <div className="w-5 h-5 rounded-full flex items-center justify-center shrink-0 transition-colors"
-                        style={{ border: habit.checked ? 'none' : '1.5px solid #374151', background: habit.checked ? '#10B981' : 'transparent' }}>
+                    className="flex items-center justify-between p-4 border border-[var(--color-border)] bg-[var(--color-bg)] cursor-pointer hover:border-[var(--color-primary)] transition-colors">
+                    <div className="flex items-center gap-4">
+                      <div className={`w-5 h-5 rounded-full flex items-center justify-center shrink-0 border ${habit.checked ? 'bg-[var(--color-primary)] border-[var(--color-primary)]' : 'bg-white border-[var(--color-border)]'}`}>
                         {habit.checked && <Check className="w-3.5 h-3.5 text-white" strokeWidth={3} />}
                       </div>
-                      <span className="text-[14px] font-inter transition-colors"
-                        style={{ color: habit.checked ? '#6b7280' : '#e5e7eb', textDecoration: habit.checked ? 'line-through' : 'none' }}>
+                      <span className={`text-[15px] font-sans transition-colors ${habit.checked ? 'text-[var(--color-text-hint)] line-through' : 'text-[var(--color-primary)]'}`}>
                         {habit.name}
                       </span>
                     </div>
-                    <span className="text-[11px] font-poppins font-bold text-white px-2 py-0.5 rounded-full"
-                      style={{ background: habit.checked ? 'linear-gradient(135deg,#10B981,#059669)' : 'linear-gradient(135deg,#f26522,#d4541a)' }}>
+                    <span className={`text-[12px] font-sans font-bold px-2.5 py-1 border ${habit.checked ? 'text-white bg-[var(--color-primary)] border-[var(--color-primary)]' : 'text-[var(--color-text-secondary)] bg-white border-[var(--color-border)]'}`}>
                       {habit.streak}d
                     </span>
                   </div>
                 ))}
                 {habits.length === 0 && !isAddingHabit && (
-                  <p className="text-[13px] font-inter text-center py-4" style={{ color: '#6b7280' }}>No habits tracked yet.</p>
+                  <div className="text-center py-6 px-4 bg-[var(--color-bg)] border border-[var(--color-border)] mt-2">
+                    <p className="text-[14px] font-sans text-[var(--color-text-secondary)]">No habit routines installed.</p>
+                  </div>
                 )}
               </div>
               
               {isAddingHabit && (
-                <div className="mt-3 flex items-center gap-2 px-2">
+                <div className="mt-4 flex items-center gap-2 bg-[var(--color-bg)] p-2 border border-[var(--color-border)]">
                   <input 
                     type="text" 
-                    placeholder="e.g., Drink Water"
+                    placeholder="Initialize new habit..."
                     value={newHabitText}
                     onChange={(e) => setNewHabitText(e.target.value)}
                     onKeyDown={(e) => e.key === 'Enter' && addHabit()}
-                    className="flex-1 bg-[#050505] border border-[#1f2937] text-white px-3 py-2 rounded-lg text-[13px] focus:outline-none focus:border-[#f26522]"
+                    className="flex-1 bg-transparent border-none text-[var(--color-primary)] px-3 py-2 text-[14px] focus:outline-none placeholder-[var(--color-text-hint)] font-sans"
                     autoFocus
                   />
-                  <button onClick={addHabit} className="bg-[#f26522] text-white p-2 rounded-lg hover:bg-[#d4541a]">
+                  <button onClick={addHabit} className="btn-elegant w-10 h-10 px-0 flex justify-center items-center">
                     <Check className="w-4 h-4" />
                   </button>
-                  <button onClick={() => setIsAddingHabit(false)} className="bg-[#1f2937] text-white p-2 rounded-lg hover:bg-[#374151]">
+                  <button onClick={() => setIsAddingHabit(false)} className="w-10 h-10 border border-[var(--color-border)] bg-white text-[var(--color-primary)] flex justify-center items-center">
                     <X className="w-4 h-4" />
                   </button>
                 </div>
@@ -277,18 +274,23 @@ const Goals = () => {
             </div>
           </div>
 
-          {/* Check-in Card */}
-          <div className="rounded-[16px] p-5" style={{ background: 'rgba(242,101,34,0.06)', border: '1px solid rgba(242,101,34,0.2)' }}>
-            <h3 className="text-[16px] font-poppins font-semibold" style={{ color: '#f26522' }}>
-              How's your progress this week, {userProfile?.name?.split(' ')[0] || 'champ'}? 👋
+          {/* AI Check-in Card */}
+          <div className="p-6 lg:p-8 bg-[var(--color-primary)] border border-[var(--color-primary)]">
+            <div className="flex items-center gap-3 mb-4">
+              <div className="w-8 h-8 rounded-full bg-white/10 flex items-center justify-center">
+                <Bot className="w-4 h-4 text-white" />
+              </div>
+              <span className="text-[12px] font-sans font-bold text-white/80 uppercase tracking-widest">
+                AI Telemetry Check
+              </span>
+            </div>
+            <h3 className="text-[18px] font-serif font-semibold text-white leading-snug mb-6">
+              How are your optimization parameters holding up this week, {userProfile?.name?.split(' ')[0] || 'champ'}?
             </h3>
-            <div className="flex flex-wrap gap-2 mt-4">
-              {['Going great! 🔥', 'Struggling a bit 😔', 'Need help 🆘', 'I crushed it! 🎯'].map(btn => (
+            <div className="flex flex-wrap gap-3">
+              {['Executing perfectly ⚡', 'Experiencing friction 🤔', 'Require recalibration 🆘', 'Surpassing targets 🎯'].map((btn) => (
                 <button key={btn} onClick={() => navigate('/student/chat', { state: { initialMessage: btn, isGoalCheckin: true } })}
-                  className="text-[13px] font-inter font-medium px-4 py-2 rounded-full transition-all"
-                  style={{ border: '1px solid rgba(242,101,34,0.3)', color: '#f26522', background: 'transparent' }}
-                  onMouseEnter={e => { e.currentTarget.style.background = '#f26522'; e.currentTarget.style.color = '#fff'; }}
-                  onMouseLeave={e => { e.currentTarget.style.background = 'transparent'; e.currentTarget.style.color = '#f26522'; }}>
+                  className="text-[13px] font-sans font-medium px-4 py-2.5 bg-white/10 hover:bg-white text-white hover:text-[var(--color-primary)] transition-colors border border-white/20 hover:border-white">
                   {btn}
                 </button>
               ))}

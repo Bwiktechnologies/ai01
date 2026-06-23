@@ -74,26 +74,26 @@ const Onboarding = () => {
   
   const renderStep1 = () => (
     <div className="flex flex-col items-center">
-      <h2 className="text-[28px] font-poppins font-bold text-[var(--color-text-primary)] text-center">
+      <h2 className="text-[28px] font-serif font-bold text-[var(--color-primary)] text-center tracking-tight">
         Arre yaar, welcome! 🎉
       </h2>
-      <p className="text-[15px] font-inter text-text-secondary text-center mt-3 mb-8">
+      <p className="text-[15px] font-sans text-[var(--color-text-secondary)] text-center mt-3 mb-8">
         I'm Sajan Shah. Before we begin, tell me a little about yourself.
       </p>
       <input
         type="text"
-        className="w-full h-[52px] bg-white border-[1.5px] border-[var(--color-border)] rounded-[10px] px-4 text-[15px] focus:border-[var(--color-accent)] focus:ring-[3px] focus:ring-[var(--color-accent)]/12 outline-none transition-all"
+        className="w-full h-12 bg-[var(--color-bg)] border border-[var(--color-border)] px-4 text-[15px] text-[var(--color-primary)] focus:border-[var(--color-primary)] focus:bg-white outline-none transition-all font-sans"
         placeholder="Your full name"
         value={name}
         onChange={(e) => setName(e.target.value)}
       />
-      <Button 
-        className="w-full mt-8 h-[52px]" 
+      <button 
+        className="btn-elegant w-full mt-8 justify-center h-12" 
         onClick={nextStep}
         disabled={name.length < 2}
       >
         Let's Go! →
-      </Button>
+      </button>
     </div>
   );
 
@@ -101,24 +101,24 @@ const Onboarding = () => {
     const options = ["Under 15", "15 — 18", "18 — 25", "25 and above"];
     return (
       <div className="flex flex-col">
-        <h2 className="text-[26px] font-poppins font-bold text-[var(--color-text-primary)] text-center">
+        <h2 className="text-[26px] font-serif font-bold text-[var(--color-primary)] text-center tracking-tight">
           How old are you?
         </h2>
-        <div className="grid grid-cols-2 gap-3 mt-6">
+        <div className="grid grid-cols-2 gap-4 mt-8">
           {options.map(opt => (
             <div 
               key={opt}
               onClick={() => { setAgeGroup(opt); setTimeout(nextStep, 300); }}
-              className={`relative px-5 py-4 rounded-[14px] border-2 cursor-pointer text-center text-[16px] font-poppins font-semibold transition-all duration-200
+              className={`relative px-5 py-4 border cursor-pointer text-center text-[15px] font-sans font-bold transition-all duration-200
                 ${ageGroup === opt 
-                  ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)]' 
-                  : 'border-[var(--color-border)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)]/50 hover:bg-orange-50/50'
+                  ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white' 
+                  : 'border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'
                 }`}
             >
               {opt}
               {ageGroup === opt && (
                 <div className="absolute top-2 right-2">
-                  <Check className="w-3.5 h-3.5 text-[var(--color-accent)]" />
+                  <Check className="w-3.5 h-3.5 text-white" />
                 </div>
               )}
             </div>
@@ -138,24 +138,24 @@ const Onboarding = () => {
     ];
     return (
       <div className="flex flex-col">
-        <h2 className="text-[26px] font-poppins font-bold text-[var(--color-text-primary)] text-center">
+        <h2 className="text-[26px] font-serif font-bold text-[var(--color-primary)] text-center tracking-tight">
           What best describes you?
         </h2>
-        <div className="flex flex-col gap-2.5 mt-6">
+        <div className="flex flex-col gap-3 mt-8">
           {options.map(opt => (
             <div 
               key={opt.id}
               onClick={() => { setSituation(opt.id); setTimeout(nextStep, 300); }}
-              className={`flex items-center gap-3 px-[18px] py-[14px] rounded-xl border-2 cursor-pointer transition-all duration-200
+              className={`flex items-center gap-4 px-[18px] py-[14px] border cursor-pointer transition-all duration-200
                 ${situation === opt.id 
-                  ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)]' 
-                  : 'border-[var(--color-border)] text-[var(--color-text-primary)] hover:border-[var(--color-accent)]/50 hover:bg-orange-50/50'
+                  ? 'border-[var(--color-primary)] bg-[var(--color-bg)] text-[var(--color-primary)]' 
+                  : 'border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'
                 }`}
             >
               <span className="text-[20px]">{opt.icon}</span>
-              <span className="text-[15px] font-poppins font-semibold">{opt.id}</span>
+              <span className="text-[15px] font-sans font-bold">{opt.id}</span>
               {situation === opt.id && (
-                <Check className="w-4 h-4 ml-auto text-[var(--color-accent)]" />
+                <Check className="w-5 h-5 ml-auto text-[var(--color-primary)]" />
               )}
             </div>
           ))}
@@ -172,22 +172,22 @@ const Onboarding = () => {
     ];
     return (
       <div className="flex flex-col">
-        <h2 className="text-[26px] font-poppins font-bold text-[var(--color-text-primary)] text-center">
+        <h2 className="text-[26px] font-serif font-bold text-[var(--color-primary)] text-center tracking-tight">
           What's your biggest struggle right now?
         </h2>
-        <p className="text-[14px] text-text-hint text-center mt-2">Select all that apply</p>
+        <p className="text-[13px] font-sans font-bold uppercase tracking-widest text-[var(--color-text-hint)] text-center mt-3">Select all that apply</p>
         
-        <div className="flex flex-wrap gap-3 mt-6 justify-center">
+        <div className="flex flex-wrap gap-3 mt-8 justify-center">
           {options.map(opt => {
             const isSelected = challenges.includes(opt);
             return (
               <div 
                 key={opt}
                 onClick={() => toggleChallenge(opt)}
-                className={`px-4 py-2 rounded-full border-[1.5px] cursor-pointer text-[14px] transition-all duration-200 font-inter
+                className={`px-4 py-2 border cursor-pointer text-[14px] transition-all duration-200 font-sans font-medium
                   ${isSelected 
-                    ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10 text-[var(--color-accent)] font-semibold' 
-                    : 'border-[var(--color-border)] text-text-secondary font-medium hover:bg-gray-50'
+                    ? 'border-[var(--color-primary)] bg-[var(--color-primary)] text-white' 
+                    : 'border-[var(--color-border)] bg-white text-[var(--color-text-secondary)] hover:border-[var(--color-primary)] hover:text-[var(--color-primary)]'
                   }`}
               >
                 {opt}
@@ -198,56 +198,56 @@ const Onboarding = () => {
         
         <input
           type="text"
-          className="w-full h-[48px] bg-white border-[1.5px] border-[var(--color-border)] rounded-[10px] px-4 mt-4 text-[14px] focus:border-[var(--color-accent)] focus:outline-none"
+          className="w-full h-12 bg-[var(--color-bg)] border border-[var(--color-border)] px-4 mt-6 text-[14px] text-[var(--color-primary)] focus:border-[var(--color-primary)] focus:bg-white outline-none font-sans transition-all"
           placeholder="Anything else? Tell me..."
           value={customChallenge}
           onChange={(e) => setCustomChallenge(e.target.value)}
         />
         
-        <Button 
-          className="w-full mt-8 h-[52px]" 
+        <button 
+          className="btn-elegant w-full mt-8 justify-center h-12" 
           onClick={nextStep}
           disabled={challenges.length === 0 && !customChallenge.trim()}
         >
           Continue
-        </Button>
+        </button>
       </div>
     );
   };
 
   const renderStep5 = () => (
     <div className="flex flex-col">
-      <h2 className="text-[26px] font-poppins font-bold text-[var(--color-text-primary)] text-center">
+      <h2 className="text-[26px] font-serif font-bold text-[var(--color-primary)] text-center tracking-tight">
         What do you want to achieve in 90 days?
       </h2>
-      <p className="text-[15px] text-[var(--color-accent)] italic text-center mt-3 font-medium">
+      <p className="text-[15px] text-[var(--color-text-secondary)] italic text-center mt-3 font-serif">
         "Be specific, yaar. Vague goals = vague results. — Sajan Shah"
       </p>
       
-      <div className="mt-6 relative">
+      <div className="mt-8 relative">
         <textarea
-          className="w-full min-h-[140px] resize-none bg-white border-[1.5px] border-[var(--color-border)] rounded-[10px] p-4 text-[15px] focus:border-[var(--color-accent)] focus:outline-none"
+          className="w-full min-h-[140px] resize-none bg-[var(--color-bg)] border border-[var(--color-border)] p-4 text-[15px] text-[var(--color-primary)] focus:border-[var(--color-primary)] focus:bg-white outline-none font-sans transition-all"
           placeholder="I want to..."
           maxLength={500}
           value={goal90Day}
           onChange={(e) => setGoal90Day(e.target.value)}
         />
-        <div className="absolute bottom-3 right-3 text-[12px] font-inter text-text-hint font-medium bg-white px-1">
+        <div className="absolute bottom-3 right-3 text-[12px] font-sans font-bold text-[var(--color-text-hint)] bg-transparent px-1">
           {goal90Day.length} / 500
         </div>
       </div>
       
-      <p className="text-[12px] text-text-hint italic mt-3 leading-relaxed">
-        Example: I want to score 90% in my board exams by improving focus and studying 3 hours daily with zero phone distractions.
+      <p className="text-[13px] text-[var(--color-text-secondary)] mt-4 leading-relaxed font-sans bg-white border border-[var(--color-border)] p-4">
+        <strong className="text-[var(--color-primary)]">Example:</strong> I want to score 90% in my board exams by improving focus and studying 3 hours daily with zero phone distractions.
       </p>
       
-      <Button 
-        className="w-full mt-6 h-[52px]" 
+      <button 
+        className="btn-elegant w-full mt-8 justify-center h-12" 
         onClick={nextStep}
         disabled={goal90Day.trim().length < 10}
       >
         Almost Done
-      </Button>
+      </button>
     </div>
   );
 
@@ -260,32 +260,32 @@ const Onboarding = () => {
     ];
     return (
       <div className="flex flex-col">
-        <h2 className="text-[26px] font-poppins font-bold text-[var(--color-text-primary)] text-center">
+        <h2 className="text-[26px] font-serif font-bold text-[var(--color-primary)] text-center tracking-tight">
           How should I talk to you?
         </h2>
         
-        <div className="grid grid-cols-2 gap-3 mt-6">
+        <div className="grid grid-cols-2 gap-4 mt-8">
           {options.map(opt => (
             <div 
               key={opt.id}
               onClick={() => setLanguage(opt.id)}
-              className={`relative p-4 rounded-[14px] border-2 cursor-pointer flex flex-col items-center justify-center gap-1 transition-all duration-200
+              className={`relative p-5 border cursor-pointer flex flex-col items-center justify-center gap-2 transition-all duration-200
                 ${language === opt.id 
-                  ? 'border-[var(--color-accent)] bg-[var(--color-accent)]/10' 
-                  : 'border-[var(--color-border)] hover:border-[var(--color-accent)]/50 hover:bg-orange-50/50'
+                  ? 'border-[var(--color-primary)] bg-[var(--color-bg)]' 
+                  : 'border-[var(--color-border)] bg-white hover:border-[var(--color-primary)]'
                 }`}
             >
               {opt.rec && (
-                <span className="absolute -top-2.5 -right-2 bg-[var(--color-accent)] text-white text-[9px] font-bold px-2 py-0.5 rounded-full uppercase">
+                <span className="absolute -top-3 right-2 bg-[var(--color-primary)] text-white text-[9px] font-bold px-2 py-0.5 uppercase tracking-widest border border-white">
                   Recommended
                 </span>
               )}
-              <span className="text-[24px]">{opt.flag}</span>
-              <span className={`text-[15px] font-poppins font-semibold text-center ${language === opt.id ? 'text-[var(--color-accent)]' : 'text-[var(--color-text-primary)]'}`}>
+              <span className="text-[28px]">{opt.flag}</span>
+              <span className={`text-[15px] font-sans font-bold text-center ${language === opt.id ? 'text-[var(--color-primary)]' : 'text-[var(--color-text-secondary)]'}`}>
                 {opt.label}
               </span>
               {opt.sub && (
-                <span className="text-[11px] font-inter text-text-hint text-center mt-0.5">
+                <span className="text-[11px] font-sans font-medium text-[var(--color-text-hint)] text-center mt-1">
                   {opt.sub}
                 </span>
               )}
@@ -293,14 +293,13 @@ const Onboarding = () => {
           ))}
         </div>
         
-        <Button 
-          className="w-full mt-8 h-[52px]" 
+        <button 
+          className="btn-elegant w-full mt-8 justify-center h-14" 
           onClick={handleFinish}
           disabled={!language || isSubmitting}
-          isLoading={isSubmitting}
         >
-          Start My Journey 🚀
-        </Button>
+          {isSubmitting ? 'Initializing Matrix...' : 'Start My Journey'}
+        </button>
       </div>
     );
   };
@@ -317,9 +316,9 @@ const Onboarding = () => {
   return (
     <div className="min-h-screen bg-white">
       {/* Top Progress Bar */}
-      <div className="fixed top-0 left-0 right-0 h-1 bg-gray-100 z-50">
+      <div className="fixed top-0 left-0 right-0 h-1 bg-[var(--color-bg)] z-50">
         <div 
-          className="h-full bg-[var(--color-accent)] transition-all duration-400 ease-out"
+          className="h-full bg-[var(--color-primary)] transition-all duration-400 ease-out"
           style={{ width: `${(step / totalSteps) * 100}%` }}
         />
       </div>
@@ -328,15 +327,15 @@ const Onboarding = () => {
         {step > 1 && (
           <button 
             onClick={prevStep}
-            className="absolute top-12 left-6 lg:left-12 flex items-center gap-1 text-[14px] font-inter font-medium text-text-hint hover:text-text-secondary transition-colors"
+            className="absolute top-12 left-6 lg:left-12 flex items-center gap-1 text-[13px] font-sans font-bold uppercase tracking-widest text-[var(--color-text-hint)] hover:text-[var(--color-primary)] transition-colors"
           >
             <ChevronLeft className="w-4 h-4" />
             Back
           </button>
         )}
         
-        <div className="text-center mb-8 mt-14">
-          <span className="text-[12px] font-inter font-bold text-text-hint uppercase tracking-widest">
+        <div className="text-center mb-10 mt-14">
+          <span className="text-[11px] font-sans font-bold text-[var(--color-text-hint)] uppercase tracking-widest border border-[var(--color-border)] px-4 py-1.5 bg-[var(--color-bg)]">
             Step {step} of {totalSteps}
           </span>
         </div>

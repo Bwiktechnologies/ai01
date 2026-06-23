@@ -4,16 +4,21 @@ import AdminSidebar from './AdminSidebar';
 
 const AdminLayout = () => {
   return (
-    <div className="min-h-screen bg-[var(--color-bg)] flex">
+    <div className="h-screen bg-[var(--color-bg)] flex font-sans relative overflow-hidden">
+      {/* Elegant Flat Background - No Orbs */}
+      <div className="fixed inset-0 z-0 pointer-events-none bg-[var(--color-bg)]"></div>
+
       {/* Admin Sidebar */}
-      <div className="w-[260px] flex-shrink-0 z-40 fixed h-full bg-[#1A1A2E]">
+      <div className="w-[260px] flex-shrink-0 relative z-40 border-r border-[var(--color-border)] bg-white h-full">
         <AdminSidebar />
       </div>
 
       {/* Main Content Area */}
-      <div className="flex-1 ml-[260px] min-h-screen">
-        <main className="w-full min-h-screen relative">
-          <Outlet />
+      <div className="flex-1 flex flex-col h-screen relative z-10 overflow-hidden">
+        <main className="flex-1 overflow-y-auto p-4 lg:p-12">
+          <div className="w-full h-full">
+            <Outlet />
+          </div>
         </main>
       </div>
     </div>

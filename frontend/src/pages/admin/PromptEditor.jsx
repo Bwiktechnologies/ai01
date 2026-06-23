@@ -21,46 +21,45 @@ Never provide medical advice. If a user expresses severe depression or self-harm
   };
 
   return (
-    <div className="p-8 max-w-5xl mx-auto w-full flex flex-col h-[calc(100vh-64px)]">
-      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-6 gap-4 shrink-0">
+    <div className="p-8 lg:p-12 max-w-5xl mx-auto w-full flex flex-col h-[calc(100vh-64px)]">
+      <div className="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-6 shrink-0">
         <div>
-          <h2 className="text-[24px] font-poppins font-bold text-[#1A1A2E] flex items-center gap-2">
-            <Sparkles className="w-6 h-6 text-[var(--color-accent)]" />
-            System Prompt Editor
+          <h2 className="text-4xl lg:text-5xl font-serif font-bold text-[var(--color-primary)] tracking-tight flex items-center gap-4">
+            <Sparkles className="w-8 h-8 text-[var(--color-accent)]" />
+            System Prompt Editor.
           </h2>
-          <p className="text-[14px] font-inter text-text-secondary mt-1 max-w-2xl">
+          <p className="text-[16px] font-sans text-[var(--color-text-secondary)] mt-2 max-w-2xl leading-relaxed">
             Configure the core persona, tone, and guardrails for Sajan AI. This affects all chat interactions across the platform.
           </p>
         </div>
         <div className="flex items-center gap-4">
-          <span className="text-[12px] font-inter text-text-hint">
+          <span className="text-[13px] font-sans font-semibold text-[var(--color-text-hint)] tracking-wide">
             Last saved: {lastSaved}
           </span>
-          <Button onClick={handleSave} isLoading={isSaving} className="flex items-center gap-2">
-            {!isSaving && <Save className="w-4 h-4" />}
-            Save & Deploy
-          </Button>
+          <button onClick={handleSave} disabled={isSaving} className="btn-elegant px-6 flex items-center gap-2">
+            {!isSaving ? <><Save className="w-4 h-4" /> Save & Deploy</> : 'Saving...'}
+          </button>
         </div>
       </div>
 
-      <div className="bg-blue-50 border border-blue-200 rounded-xl p-4 flex items-start gap-3 mb-6 shrink-0">
-        <AlertCircle className="w-5 h-5 text-blue-600 shrink-0 mt-0.5" />
+      <div className="bg-blue-50 border border-blue-200 rounded-xl p-6 flex items-start gap-4 mb-8 shrink-0">
+        <AlertCircle className="w-6 h-6 text-blue-600 shrink-0 mt-0.5" />
         <div>
-          <h3 className="text-[14px] font-poppins font-semibold text-blue-800">High Impact Area</h3>
-          <p className="text-[13px] font-inter text-blue-700 mt-1 leading-relaxed">
+          <h3 className="text-[15px] font-sans font-bold text-blue-800 tracking-wide">High Impact Area</h3>
+          <p className="text-[14px] font-sans text-blue-700 mt-1.5 leading-relaxed">
             Changes here are immediately applied to the OpenAI API context window. Make sure to test the persona thoroughly. Do not remove the emergency helpline guardrails.
           </p>
         </div>
       </div>
 
-      <div className="flex-1 bg-white rounded-2xl shadow-card border border-[#E5E7EB] flex flex-col overflow-hidden relative group">
-        <div className="absolute top-4 right-4 bg-gray-100 text-gray-500 text-[11px] font-mono px-2 py-1 rounded">
+      <div className="flex-1 bg-white rounded-2xl shadow-sm border border-[var(--color-border)] flex flex-col overflow-hidden relative group">
+        <div className="absolute top-4 right-4 bg-[var(--color-bg)] text-[var(--color-text-secondary)] border border-[var(--color-border)] text-xs font-mono px-3 py-1.5 rounded-lg font-semibold">
           {prompt.length} chars
         </div>
         <textarea
           value={prompt}
           onChange={(e) => setPrompt(e.target.value)}
-          className="w-full h-full p-6 text-[14px] font-mono leading-relaxed text-gray-800 resize-none outline-none focus:ring-4 focus:ring-[var(--color-accent)]/10"
+          className="w-full h-full p-8 text-[15px] font-mono leading-relaxed text-[var(--color-primary)] bg-white resize-none outline-none focus:ring-1 focus:ring-[var(--color-primary)]"
           spellCheck="false"
         />
       </div>

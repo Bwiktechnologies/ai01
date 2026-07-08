@@ -1,6 +1,6 @@
 import React, { useState, useEffect, useRef } from 'react';
 import { Brain, Zap, Clock, Puzzle, Play, RefreshCw, Trophy, ArrowLeft } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { auth } from '../../firebase';
 
 const BrainGym = () => {

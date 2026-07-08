@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { User, Bell, Shield, Globe, Save, Trophy, Flame, Target, Activity } from 'lucide-react';
 import { BarChart, Bar, XAxis, YAxis, CartesianGrid, Tooltip, ResponsiveContainer, LineChart, Line } from 'recharts';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import Input from '../../components/ui/Input';
 import { ToastContainer } from '../../components/ui/Toast';
 

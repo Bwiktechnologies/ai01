@@ -1,6 +1,6 @@
 import React, { useState, useRef, useEffect } from 'react';
 import { Paperclip, SendHorizontal, Info, X } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { useLocation, useNavigate } from 'react-router-dom';
 import ChatMessage from '../../components/chat/ChatMessage';
 import TypingIndicator from '../../components/chat/TypingIndicator';

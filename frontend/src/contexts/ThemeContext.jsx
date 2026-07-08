@@ -5,11 +5,7 @@ const ThemeContext = createContext();
 export const useTheme = () => useContext(ThemeContext);
 
 export const ThemeProvider = ({ children }) => {
-  const [isDark, setIsDark] = useState(() => {
-    // Force dark mode to showcase the new AI Agent theme
-    localStorage.setItem('theme', 'dark');
-    return true;
-  });
+  const [isDark, setIsDark] = useState(false);
 
   useEffect(() => {
     if (isDark) {

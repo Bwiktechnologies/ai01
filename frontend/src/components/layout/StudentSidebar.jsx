@@ -14,7 +14,7 @@ import {
   LogOut,
   Sparkles
 } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const StudentSidebar = () => {
   const { logout, userProfile } = useAuth();
@@ -88,7 +88,7 @@ const StudentSidebar = () => {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-sans transition-all duration-200 ${
                         isActive
-                          ? 'bg-[var(--color-bg)] text-[var(--color-primary)] font-semibold'
+                          ? 'nav-active'
                           : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] font-medium'
                       }`
                     }
@@ -116,7 +116,7 @@ const StudentSidebar = () => {
                     className={({ isActive }) =>
                       `flex items-center gap-3 px-3 py-2.5 rounded-lg text-[14px] font-sans transition-all duration-200 ${
                         isActive
-                          ? 'bg-[var(--color-bg)] text-[var(--color-primary)] font-semibold'
+                          ? 'nav-active'
                           : 'text-[var(--color-text-secondary)] hover:bg-[var(--color-bg)] hover:text-[var(--color-primary)] font-medium'
                       }`
                     }

@@ -1,17 +1,25 @@
-import React, { createContext, useContext, useState, useEffect } from 'react';
-import { 
-  signInWithEmailAndPassword, 
-  signInWithPopup, 
-  GoogleAuthProvider, 
+import React, { useState, useEffect } from 'react';
+import {
+  signInWithEmailAndPassword,
+  signInWithPopup,
+  GoogleAuthProvider,
   signOut,
-  onAuthStateChanged
+  onAuthStateChanged,
 } from 'firebase/auth';
 import { doc, getDoc } from 'firebase/firestore';
-import { auth, db } from '../firebase';
+import { auth, db, isFirebaseConfigured } from '../firebase';
+import {
+  isDevAuthEnabled,
+  getDevSession,
+  devLogin,
+  devLogout,
+} from '../devAuth';
+import { AuthContext } from './auth-context';
 
-const AuthContext = createContext();
+const CONFIG_ERROR =
+  'Firebase is not configured. Add credentials to frontend/.env, or use dev login below.';
 
-export const useAuth = () => useContext(AuthContext);
+const useDevAuth = isDevAuthEnabled && !isFirebaseConfigured;
 
 export const AuthProvider = ({ children }) => {
   const [userProfile, setUserProfile] = useState(null);
@@ -19,34 +27,38 @@ export const AuthProvider = ({ children }) => {
   const [loading, setLoading] = useState(true);
   const [error, setError] = useState('');
 
-  // 8-second safety timeout for loading state
   useEffect(() => {
-    const timer = setTimeout(() => {
-      if (loading) {
-        setLoading(false);
-        setError('Loading took too long. Please refresh the page.');
+    if (useDevAuth) {
+      const session = getDevSession();
+      if (session) {
+        setUserProfile(session);
+        setIsAdmin(session.role === 'admin');
       }
-    }, 8000);
-    return () => clearTimeout(timer);
-  }, [loading]);
+      setLoading(false);
+      return;
+    }
 
-  useEffect(() => {
+    if (!isFirebaseConfigured || !auth) {
+      setLoading(false);
+      setError(CONFIG_ERROR);
+      return;
+    }
+
     const unsubscribe = onAuthStateChanged(auth, async (user) => {
       try {
         if (user) {
           const docRef = doc(db, 'users', user.uid);
           const docSnap = await getDoc(docRef);
-          
+
           if (docSnap.exists()) {
             const profileData = { uid: user.uid, ...docSnap.data() };
             setUserProfile(profileData);
             setIsAdmin(profileData.role === 'admin');
           } else {
-            // User exists in Auth but not in Firestore -> not allowed
             await signOut(auth);
             setUserProfile(null);
             setIsAdmin(false);
-            setError('Access denied: Profile not found.');
+            setError('Access denied: Profile not found in database.');
           }
         } else {
           setUserProfile(null);
@@ -63,89 +75,115 @@ export const AuthProvider = ({ children }) => {
     return unsubscribe;
   }, []);
 
-  // --- SILENT ACTIVITY TRACKER ---
   useEffect(() => {
-    // Only track if a user is logged in
-    if (!userProfile || !auth.currentUser) return;
-    
+    if (!userProfile || useDevAuth || !auth?.currentUser) return;
+
+    const apiBase = import.meta.env.VITE_API_BASE_URL || 'http://localhost:4000';
+
     const trackActivity = async () => {
       try {
         const token = await auth.currentUser.getIdToken();
-        const response = await fetch('http://localhost:5000/api/student/activity', {
+        const response = await fetch(`${apiBase}/api/student/activity`, {
           method: 'POST',
           headers: {
             'Content-Type': 'application/json',
-            'Authorization': `Bearer ${token}`
-          }
+            Authorization: `Bearer ${token}`,
+          },
         });
-        
         if (response.ok) {
           const data = await response.json();
-          // Silently update userProfile so charts reflect it, without forcing a massive app reload
-          setUserProfile(prev => ({
-            ...prev,
-            dailyActivity: data.dailyActivity
-          }));
+          setUserProfile((prev) => ({ ...prev, dailyActivity: data.dailyActivity }));
         }
-      } catch (err) {
-        // Silently fail if tracker errors out (e.g. offline)
+      } catch {
+        /* offline or backend down */
       }
     };
 
-    // Ping every 60 seconds
     const intervalId = setInterval(trackActivity, 60000);
-    
-    // Also ping immediately once on mount/login (optional, maybe skip to avoid double counting if they just log in)
-    // trackActivity();
-
     return () => clearInterval(intervalId);
-  }, [userProfile?.uid]); // only re-run if UID changes
+  }, [userProfile?.uid]);
 
   const login = async (email, password) => {
+    if (useDevAuth) {
+      try {
+        setLoading(true);
+        setError('');
+        const profile = await devLogin(email, password);
+        setUserProfile(profile);
+        setIsAdmin(profile.role === 'admin');
+        return profile;
+      } catch (err) {
+        setError(err.message);
+        throw err;
+      } finally {
+        setLoading(false);
+      }
+    }
+
+    if (!auth) {
+      const err = new Error(CONFIG_ERROR);
+      setError(err.message);
+      throw err;
+    }
+
     try {
       setLoading(true);
       setError('');
       const userCredential = await signInWithEmailAndPassword(auth, email, password);
-      
       const docRef = doc(db, 'users', userCredential.user.uid);
       const docSnap = await getDoc(docRef);
-      
+
       if (docSnap.exists()) {
         const profileData = { uid: userCredential.user.uid, ...docSnap.data() };
         setUserProfile(profileData);
         setIsAdmin(profileData.role === 'admin');
         return profileData;
-      } else {
-        await signOut(auth);
-        throw new Error('Access denied: Profile not found.');
       }
+      await signOut(auth);
+      throw new Error('Access denied: Profile not found in database.');
     } catch (err) {
-      setError(err.message);
-      throw err;
+      const msg =
+        err.code === 'auth/invalid-credential' || err.code === 'auth/wrong-password'
+          ? 'Invalid email or password.'
+          : err.code === 'auth/user-not-found'
+            ? 'No account found with this email.'
+            : err.code === 'auth/too-many-requests'
+              ? 'Too many attempts. Please wait and try again.'
+              : err.message;
+      setError(msg);
+      throw new Error(msg);
     } finally {
       setLoading(false);
     }
   };
 
   const googleLogin = async () => {
+    if (useDevAuth) {
+      const err = new Error('Google sign-in requires Firebase. Use email/password in dev mode.');
+      setError(err.message);
+      throw err;
+    }
+    if (!auth) {
+      const err = new Error(CONFIG_ERROR);
+      setError(err.message);
+      throw err;
+    }
     try {
       setLoading(true);
       setError('');
       const provider = new GoogleAuthProvider();
       const userCredential = await signInWithPopup(auth, provider);
-      
       const docRef = doc(db, 'users', userCredential.user.uid);
       const docSnap = await getDoc(docRef);
-      
+
       if (docSnap.exists()) {
         const profileData = { uid: userCredential.user.uid, ...docSnap.data() };
         setUserProfile(profileData);
         setIsAdmin(profileData.role === 'admin');
         return profileData;
-      } else {
-        await signOut(auth);
-        throw new Error('Access denied: You are not registered for this platform.');
       }
+      await signOut(auth);
+      throw new Error('Access denied: You are not registered for this platform.');
     } catch (err) {
       setError(err.message);
       throw err;
@@ -157,7 +195,11 @@ export const AuthProvider = ({ children }) => {
   const logout = async () => {
     try {
       setLoading(true);
-      await signOut(auth);
+      if (useDevAuth) {
+        devLogout();
+      } else if (auth) {
+        await signOut(auth);
+      }
       setUserProfile(null);
       setIsAdmin(false);
     } catch (err) {
@@ -172,15 +214,13 @@ export const AuthProvider = ({ children }) => {
     isAdmin,
     loading,
     error,
+    isFirebaseConfigured,
+    isDevAuth: useDevAuth,
     login,
     googleLogin,
     logout,
-    setUserProfile // Allow manual updates to profile in context
+    setUserProfile,
   };
 
-  return (
-    <AuthContext.Provider value={value}>
-      {children}
-    </AuthContext.Provider>
-  );
+  return <AuthContext.Provider value={value}>{children}</AuthContext.Provider>;
 };

@@ -1,6 +1,6 @@
 import React from 'react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { MessageSquareText, Target, Brain, TrendingUp, ArrowRight, Sparkles } from 'lucide-react';
 import Button from '../../components/ui/Button';
 
@@ -13,7 +13,7 @@ const Dashboard = () => {
   return (
     <div className="flex flex-col gap-8 pb-10">
       {/* Welcome Banner */}
-      <div className="relative overflow-hidden bg-white border border-[var(--color-border)] p-8 lg:p-12">
+      <div className="relative overflow-hidden card p-8 lg:p-12">
         <div className="relative z-10 max-w-3xl">
           <div className="inline-flex items-center gap-2 mb-6">
             <span className="w-2 h-2 rounded-full bg-green-500"></span>
@@ -49,7 +49,7 @@ const Dashboard = () => {
       {/* Widgets */}
       <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
         {/* Widget 1 */}
-        <div className="bg-white p-8 border border-[var(--color-border)] flex flex-col">
+        <div className="card p-8 flex flex-col">
           <div className="w-12 h-12 flex items-center justify-center mb-6">
             <Target className="w-6 h-6 text-[var(--color-primary)]" />
           </div>
@@ -65,7 +65,7 @@ const Dashboard = () => {
         </div>
 
         {/* Widget 2 */}
-        <div className="bg-white p-8 border border-[var(--color-border)] flex flex-col">
+        <div className="card p-8 flex flex-col">
           <div className="w-12 h-12 flex items-center justify-center mb-6">
             <Brain className="w-6 h-6 text-[var(--color-primary)]" />
           </div>
@@ -81,7 +81,7 @@ const Dashboard = () => {
         </div>
 
         {/* Widget 3 */}
-        <div className="bg-white p-8 border border-[var(--color-border)] flex flex-col">
+        <div className="card p-8 flex flex-col">
           <div className="w-12 h-12 flex items-center justify-center mb-6">
             <TrendingUp className="w-6 h-6 text-[var(--color-primary)]" />
           </div>

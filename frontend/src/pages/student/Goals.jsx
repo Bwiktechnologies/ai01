@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from 'react';
 import { Target, Edit2, Calendar, Clock, Check, Save, Plus, X, Zap, Bot } from 'lucide-react';
 import { useNavigate } from 'react-router-dom';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 
 const Goals = () => {
   const { userProfile } = useAuth();

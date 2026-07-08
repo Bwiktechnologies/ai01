@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 import { Compass, Briefcase, GraduationCap, TrendingUp, Search, AlertCircle } from 'lucide-react';
-import { useAuth } from '../../contexts/AuthContext';
+import { useAuth } from '../../hooks/useAuth';
 import { auth } from '../../firebase';
 
 const CareerAI = () => {
